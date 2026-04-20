@@ -3,54 +3,65 @@
   width: 100%;
   max-width: none;
   background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 18px;
+  border: 3px solid #94a3b8;
+  border-radius: 12px;
+  padding: 14px;
+  min-height: 0;
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  height: 100%;
 }
 
 .hg-header {
   display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 14px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  min-height: 32px;
 }
 
 .hg-title {
   font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
+  font-weight: 800;
+  font-size: 24px;
   color: #0f172a;
 }
 
 .hg-sub {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 18px;
+  font-weight: 900;
+  color: #475569;
 }
 
 .house-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
+  flex: 1;
+  align-items: stretch;
 }
 
 /* ── House Card ── */
 .house-card {
   background: #fafafa;
-  border: 1.5px solid #e2e8f0;
+  border: 2.5px solid #cbd5e1;
   border-radius: 12px;
   padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-height: 278px;
   transition: border-color 0.2s, box-shadow 0.2s;
   position: relative;
+  align-self: stretch;
 }
 
 .house-card:hover {
   border-color: var(--house-color);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .house-card.house-attack {
@@ -123,46 +134,53 @@
 /* ── House Info ── */
 .house-info {
   text-align: center;
+  display: grid;
+  gap: 4px;
+  min-height: 50px;
+  align-content: start;
 }
 
 .house-name {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 800;
   color: #0f172a;
 }
 
 .house-id {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 18px;
+  font-weight: 900;
+  color: #475569;
 }
 
 /* ── Wallet ── */
 .wallet-section {
   background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
   padding: 8px 10px;
 }
 
 .wallet-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px;
+  align-items: baseline;
+  margin-bottom: 6px;
+  min-height: 28px;
 }
 
 .wallet-label {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #64748b;
+  font-size: 18px;
+  font-weight: 900;
+  color: #1e293b;
 }
 
 .wallet-amount {
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 800;
   color: #0f172a;
 }
 
@@ -177,16 +195,16 @@
 }
 
 .wallet-bar-bg {
-  height: 5px;
+  height: 8px;
   background: #f1f5f9;
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .wallet-bar-fill {
   height: 100%;
-  border-radius: 3px;
+  border-radius: 4px;
   transition: width 0.6s ease;
 }
 
@@ -194,31 +212,36 @@
   display: flex;
   justify-content: space-between;
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 18px;
+  font-weight: 900;
+  color: #475569;
+  min-height: 24px;
+  align-items: center;
 }
 
 /* ── Controls ── */
 .house-controls {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
+  margin-top: auto;
 }
 
 .tap-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   width: 100%;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 10px 12px;
+  border-radius: 8px;
   border: 1.5px solid;
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.15s ease;
+  min-height: 44px;
 }
 
 .tap-on {
@@ -228,9 +251,9 @@
 }
 
 .tap-off {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-  color: #64748b;
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #1e293b;
 }
 
 .tap-btn:disabled {
@@ -240,19 +263,35 @@
 
 .recharge-row {
   display: flex;
-  gap: 4px;
+  gap: 8px;
+  align-items: stretch;
 }
 
+/* Native <select> needs room for both the longest option text ("Rs.100")
+   AND the dropdown arrow on the right. We give explicit width, generous
+   right padding for the arrow, and a custom caret so spacing is consistent
+   across browsers. */
 .recharge-input {
-  width: 42px;
-  padding: 5px 6px;
-  border: 1px solid #e2e8f0;
-  border-radius: 5px;
+  flex: 0 0 104px;
+  min-width: 104px;
+  padding: 6px 30px 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 18px;
+  font-weight: 800;
   color: #0f172a;
-  background: white;
-  text-align: center;
+  background-color: white;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'><path d='M1 3l4 4 4-4' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px 12px;
+  text-align: left;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  line-height: 1.2;
 }
 
 .recharge-input:focus {
@@ -269,10 +308,11 @@
   border-color: color-mix(in srgb, var(--c) 30%, white);
   color: var(--c);
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.15s ease;
+  min-height: 36px;
 }
 
 .recharge-btn:hover {
@@ -280,4 +320,237 @@
   border-color: var(--c);
 }
 
+/* ─────────────────────────────────────────────────────────── */
+/* RESPONSIVE DESIGN - HOUSE GRID                             */
+/* ─────────────────────────────────────────────────────────── */
 
+/* Extra Small (< 480px) */
+@media (max-width: 479px) {
+  .house-grid-wrapper {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .hg-header {
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+
+  .hg-title {
+    font-size: 18px;
+  }
+
+  .hg-sub {
+    font-size: 12px;
+  }
+
+  .house-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .house-card {
+    padding: 10px;
+    gap: 6px;
+    border-radius: 10px;
+  }
+
+  .house-icon-area {
+    padding: 6px 0;
+  }
+
+  .house-name {
+    font-size: 18px;
+  }
+
+  .house-id {
+    font-size: 12px;
+  }
+
+  .wallet-section {
+    padding: 6px 8px;
+  }
+
+  .wallet-amount {
+    font-size: 18px;
+  }
+
+  .wallet-label {
+    font-size: 12px;
+  }
+
+  .wallet-meta {
+    font-size: 12px;
+  }
+
+  .tap-button {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  .house-tap-btn,
+  .recharge-row {
+    gap: 6px;
+  }
+
+  .recharge-input {
+    flex: 0 0 88px;
+    min-width: 88px;
+    font-size: 12px;
+    padding: 5px 22px 5px 8px;
+    background-position: right 6px center;
+  }
+  .recharge-btn {
+    font-size: 12px;
+    padding: 5px 7px;
+  }
+}
+
+/* Small (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .house-grid-wrapper {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .hg-header {
+    margin-bottom: 12px;
+  }
+
+  .hg-title {
+    font-size: 20px;
+  }
+
+  .hg-sub {
+    font-size: 14px;
+  }
+
+  .house-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .house-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .house-name {
+    font-size: 20px;
+  }
+
+  .house-id {
+    font-size: 14px;
+  }
+
+  .wallet-section {
+    padding: 8px 10px;
+  }
+
+  .wallet-amount {
+    font-size: 20px;
+  }
+
+  .wallet-label {
+    font-size: 14px;
+  }
+
+  .wallet-meta {
+    font-size: 14px;
+  }
+
+  .tap-button {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+
+  .recharge-input {
+    flex: 0 0 96px;
+    min-width: 96px;
+    font-size: 13px;
+  }
+  .recharge-btn {
+    font-size: 12px;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .house-grid-wrapper {
+    padding: 16px;
+  }
+
+  .hg-title {
+    font-size: 22px;
+  }
+
+  .hg-sub {
+    font-size: 15px;
+  }
+
+  .house-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .house-card {
+    padding: 12px;
+  }
+
+  .house-name {
+    font-size: 20px;
+  }
+
+  .house-id {
+    font-size: 14px;
+  }
+
+  .wallet-amount {
+    font-size: 20px;
+  }
+
+  .tap-button {
+    font-size: 16px;
+  }
+}
+
+/* Large (1025px - 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .house-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .house-grid-wrapper {
+    padding: 18px;
+  }
+}
+
+/* Extra Large (> 1440px) */
+@media (min-width: 1441px) {
+  .house-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .house-grid-wrapper {
+    padding: 20px;
+  }
+}
+
+
+
+.hg-attack-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1.5px solid #fca5a5;
+  border-radius: 5px;
+  padding: 2px 8px;
+  margin-left: auto;
+  animation: badge-flash 0.5s ease-in-out infinite;
+}

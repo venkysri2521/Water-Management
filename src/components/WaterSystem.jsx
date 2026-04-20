@@ -1,6 +1,15 @@
 import './WaterSystem.css'
 
-function SideTank({ title, level, maxLevel, side, low = false }) {
+function PipeSegment({ flowing = false, attack = false }) {
+  return (
+    <div className="wm-segment" aria-hidden="true">
+      <div className="wm-segment-base" />
+      <div className={`wm-segment-flow ${flowing ? 'is-flowing' : ''} ${attack ? 'is-attack' : ''}`} />
+    </div>
+  )
+}
+
+function SideTank({ title, level, maxLevel, side, low = false, showScale = true, valueLabel = null }) {
   const pct = Math.max(0, Math.min(100, (level / maxLevel) * 100))
 
   return (
@@ -9,14 +18,15 @@ function SideTank({ title, level, maxLevel, side, low = false }) {
         <div className="wm-tank-lid" />
         <div className="wm-tank-body">
           <div className="wm-tank-water" style={{ height: `${pct}%` }} />
+          {valueLabel && <div className="wm-tank-value">{valueLabel}</div>}
         </div>
-        <div className={`wm-scale wm-scale-${side}`}>
-          {[100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0].map(mark => (
-            <span key={mark} style={{ top: `${100 - mark}%` }}>
-              {mark}
-            </span>
-          ))}
-        </div>
+        {showScale && (
+          <div className={`wm-scale wm-scale-${side}`}>
+            {[100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0].map(mark => (
+              <span key={mark}>{mark}</span>
+            ))}
+          </div>
+        )}
       </div>
       <div className="wm-card-title wm-card-title-bottom">
         {title}
@@ -52,11 +62,14 @@ function PurificationTank({ active }) {
   return (
     <div className="wm-purification-card">
       <div className="wm-purification-tank">
-        <div className={`wm-water-motion ${active ? 'is-active' : ''}`} aria-hidden="true">
-          <span className="wm-water-ring wm-water-ring-a" />
-          <span className="wm-water-ring wm-water-ring-b" />
-          <span className="wm-water-ring wm-water-ring-c" />
-          <span className="wm-water-glow" />
+        <div className={`wm-purification-water ${active ? 'is-active' : ''}`} aria-hidden="true">
+          <span className="wm-purification-blob wm-purification-blob-a" />
+          <span className="wm-purification-blob wm-purification-blob-b" />
+          <span className="wm-purification-blob wm-purification-blob-c" />
+          <span className="wm-purification-blob wm-purification-blob-d" />
+          <span className="wm-purification-mist wm-purification-mist-a" />
+          <span className="wm-purification-mist wm-purification-mist-b" />
+          <span className="wm-purification-glow" />
         </div>
         <div className={`wm-stirrer ${active ? 'is-spinning' : ''}`}>
           <span className="wm-stirrer-stick" />
@@ -84,34 +97,29 @@ export default function WaterSystem({ system }) {
   return (
     <div className="water-system water-management-diagram">
       <div className="wm-diagram">
-        <div className="wm-top-row">
+        <div className="wm-flow-layout">
           <SideTank
-            title="Tank 1"
-            level={purificationLevel}
+            title="Reservoir"
+            level={PURIFICATION_CAPACITY}
             maxLevel={PURIFICATION_CAPACITY}
             side="left"
+            showScale={false}
           />
+          <PipeSegment flowing={pumpR2P} />
+          <Pump label="Pump 1" active={pumpR2P} />
+          <PipeSegment flowing={pumpR2P} />
           <PurificationTank active={purificationRunning} />
+          <PipeSegment flowing={pumpP2M} attack={modbusAttack} />
+          <Pump label="Pump 2" active={pumpP2M} attack={modbusAttack} />
+          <PipeSegment flowing={pumpP2M} attack={modbusAttack} />
           <SideTank
             title="Tank 2"
             level={mainTankLevel}
             maxLevel={MAIN_TANK_CAPACITY}
             side="right"
             low={mainLow}
+            valueLabel={`${Math.round((mainTankLevel / MAIN_TANK_CAPACITY) * 100)}%`}
           />
-        </div>
-
-        <div className="wm-pipes" aria-hidden="true">
-          <div className="wm-pipe wm-pipe-mid-left" />
-          <div className={`wm-pipe wm-pipe-mid-left-flow ${pumpR2P ? 'is-flowing' : ''}`} />
-
-          <div className="wm-pipe wm-pipe-mid-right" />
-          <div className={`wm-pipe wm-pipe-mid-right-flow ${pumpP2M ? 'is-flowing' : ''} ${modbusAttack ? 'is-attack' : ''}`} />
-        </div>
-
-        <div className="wm-pump-row">
-          <Pump label="Pump 1" active={pumpR2P} />
-          <Pump label="Pump 2" active={pumpP2M} attack={modbusAttack} />
         </div>
       </div>
     </div>

@@ -1,50 +1,10 @@
+import { useState } from 'react'
 import './HouseGrid.css'
 
 const HOUSE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6']
 
-const wrapperStyle = {
-  fontSize: '1.08rem',
-}
-
-const headerTitleStyle = {
-  fontSize: '1.45rem',
-}
-
-const headerSubStyle = {
-  fontSize: '1rem',
-}
-
-const houseInfoStyle = {
-  gap: '0.35rem',
-}
-
-const houseNameStyle = {
-  fontSize: '1.18rem',
-}
-
-const houseIdStyle = {
-  fontSize: '0.98rem',
-}
-
-const walletLabelStyle = {
-  fontSize: '1rem',
-}
-
-const walletAmountStyle = {
-  fontSize: '1.05rem',
-}
-
-const walletMetaStyle = {
-  fontSize: '0.95rem',
-}
-
-const tapButtonStyle = color => ({
-  '--c': color,
-  fontSize: '1rem',
-  padding: '0.9rem 1rem',
-})
-
-function HouseCard({ house, onToggle, apiAttack, mainTankLevel }) {
+function HouseCard({ house, onToggle, onRecharge, apiAttack, mainTankLevel }) {
+  const [rechargeAmt, setRechargeAmt] = useState(50)
   const color = HOUSE_COLORS[house.id - 1]
   const walletPct = house.wallet
   const isLowWallet = house.wallet < 20
@@ -72,15 +32,15 @@ function HouseCard({ house, onToggle, apiAttack, mainTankLevel }) {
         <div className={`led-indicator led-${led}`} title={led === 'green' ? 'Consuming water' : 'Not consuming'} />
       </div>
 
-      <div className="house-info" style={houseInfoStyle}>
-        <div className="house-name" style={houseNameStyle}>{house.name}</div>
-        <div className="house-id" style={houseIdStyle}>Unit {String(house.id).padStart(2, '0')}</div>
+      <div className="house-info">
+        <div className="house-name">{house.name}</div>
+        <div className="house-id">Unit {String(house.id).padStart(2, '0')}</div>
       </div>
 
       <div className="wallet-section">
         <div className="wallet-header">
-          <span className="wallet-label" style={walletLabelStyle}>Wallet</span>
-          <span className={`wallet-amount ${isLowWallet ? 'wallet-low' : ''}`} style={walletAmountStyle}>
+          <span className="wallet-label">Wallet</span>
+          <span className={`wallet-amount ${isLowWallet ? 'wallet-low' : ''}`}>
             Rs.{house.wallet.toFixed(1)}
           </span>
         </div>
@@ -90,7 +50,7 @@ function HouseCard({ house, onToggle, apiAttack, mainTankLevel }) {
             style={{ width: `${walletPct}%`, background: isLowWallet ? '#ef4444' : color }}
           />
         </div>
-        <div className="wallet-meta" style={walletMetaStyle}>
+        <div className="wallet-meta">
           <span>{house.consumed.toFixed(1)} L consumed</span>
           <span>Rs.5/L</span>
         </div>
@@ -101,11 +61,32 @@ function HouseCard({ house, onToggle, apiAttack, mainTankLevel }) {
           className={`tap-btn ${house.consuming && canConsume ? 'tap-on' : 'tap-off'}`}
           onClick={() => onToggle(house.id)}
           disabled={!canConsume && !house.consuming}
-          style={tapButtonStyle(color)}
+          style={{ '--c': color }}
         >
           <TapIcon active={house.consuming && canConsume} />
           {house.consuming && canConsume ? 'Close Tap' : 'Open Tap'}
         </button>
+        {/* Scenario 3: Wallet recharge (max 100) */}
+        <div className="recharge-row">
+          <select
+            className="recharge-input"
+            value={rechargeAmt}
+            onChange={e => setRechargeAmt(Number(e.target.value))}
+          >
+            <option value={10}>Rs.10</option>
+            <option value={25}>Rs.25</option>
+            <option value={50}>Rs.50</option>
+            <option value={100}>Rs.100</option>
+          </select>
+          <button
+            className="recharge-btn"
+            style={{ '--c': color }}
+            onClick={() => onRecharge(house.id, rechargeAmt)}
+            disabled={house.wallet >= 100}
+          >
+            + Recharge
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -122,13 +103,16 @@ function TapIcon({ active }) {
 }
 
 export default function HouseGrid({ system }) {
-  const { houses, toggleConsumption, apiAttack, mainTankLevel } = system
+  const { houses, toggleConsumption, rechargeWallet, apiAttack, mainTankLevel } = system
 
   return (
-    <div className="house-grid-wrapper" style={wrapperStyle}>
+    <div className="house-grid-wrapper">
       <div className="hg-header">
-        <span className="hg-title" style={headerTitleStyle}>Residential Supply</span>
-        <span className="hg-sub" style={headerSubStyle}>4 Units Active</span>
+        <span className="hg-title">Residential Supply</span>
+        <span className="hg-sub">4 Units Active</span>
+        {apiAttack && (
+          <span className="hg-attack-badge">⚠ DB Attack Active</span>
+        )}
       </div>
       <div className="house-grid">
         {houses.map(house => (
@@ -136,6 +120,7 @@ export default function HouseGrid({ system }) {
             key={house.id}
             house={house}
             onToggle={toggleConsumption}
+            onRecharge={rechargeWallet}
             apiAttack={apiAttack}
             mainTankLevel={mainTankLevel}
           />

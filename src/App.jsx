@@ -29,16 +29,21 @@ export default function App() {
       </div>
 
       <main className="app-main">
-        <div className="pipeline-section">
-          <WaterSystem system={system} />
+        {/* ── ROW 1: Pipeline + Primary System Controls (Purification + Main Tank Fill) ── */}
+        <div className="top-section">
+          <div className="pipeline-section">
+            <WaterSystem system={system} />
+          </div>
+          <ControlPanel system={system} variant="primary" />
         </div>
 
         <div className="section-divider">
           <span>Control & Distribution</span>
         </div>
 
+        {/* ── ROW 2: Secondary System Controls (House Supply + Pilferage) + House Grid ── */}
         <div className="bottom-section">
-          <ControlPanel system={system} />
+          <ControlPanel system={system} variant="secondary" />
           <HouseGrid system={system} />
         </div>
       </main>

@@ -6,6 +6,8 @@ const HOUSE_WALLET_MAX = 100
 const WATER_COST_PER_LITER = 5
 const FILL_RATE = 2 // ml per tick
 const CONSUMPTION_RATE = 1.5
+const MAIN_TANK_REFILL_START_PCT = 0.8
+const MAIN_TANK_REFILL_STOP_PCT = 0.95
 
 export function useWaterSystem() {
   const [reservoirLevel, setReservoirLevel] = useState(850)
@@ -105,9 +107,15 @@ export function useWaterSystem() {
 
       setPurificationLevel(prev => {
         let level = prev
-        // Transfer purification -> main tank when main is below 20%
+        // Refill main tank with hysteresis so it starts early enough and
+        // doesn't rapidly toggle near the stop threshold.
         const mainPct = mainTankLevel / MAIN_TANK_CAPACITY
-        if (!modbusAttack && mainPct <= 0.2 && level > 50) {
+        const shouldFillMain =
+          !modbusAttack &&
+          level > 50 &&
+          (pumpP2M ? mainPct < MAIN_TANK_REFILL_STOP_PCT : mainPct <= MAIN_TANK_REFILL_START_PCT)
+
+        if (shouldFillMain) {
           setPumpP2M(true)
           const flow = 3 + Math.random() * 1
           setFlowRateP2M(flow)
@@ -117,7 +125,7 @@ export function useWaterSystem() {
             setFillTimeMain(t => t + 1/60)
             return newMt
           })
-        } else if (modbusAttack || mainPct > 0.95) {
+        } else {
           setPumpP2M(false)
           setFlowRateP2M(0)
         }

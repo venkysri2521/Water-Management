@@ -1,31 +1,48 @@
+/* ═══════════════════════════════════════════════════════════
+   WATER SYSTEM — FIXED ALIGNMENT & STYLING
+   ═══════════════════════════════════════════════════════════ */
+
 .water-management-diagram {
-  padding: 20px 12px 8px;
+  padding: 12px 8px 6px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .wm-diagram {
-  position: relative;
-  width: min(100%, 900px);
+  width: min(100%, 1100px);
   margin: 0 auto;
-  padding: 6px 8px 0;
+  padding: 0 20px 0 16px;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.wm-top-row {
+/* ── Main flow row: single horizontal axis, equal gaps ── */
+.wm-flow-layout {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  transform: translateY(-14px);
+  padding-right: 8px;
 }
 
 .wm-tank-card,
-.wm-purification-card {
-  position: relative;
-  z-index: 2;
+.wm-purification-card,
+.wm-pump-block,
+.wm-segment {
+  flex: 0 0 auto;
 }
 
+/* ── Labels ── */
 .wm-card-title,
 .wm-pump-label {
   font-family: Arial, sans-serif;
-  font-size: 20px;
+  font-size: 24px;
+  font-weight: 800;
   line-height: 1;
   color: #111;
 }
@@ -33,98 +50,199 @@
 .wm-card-title {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 4px;
   justify-content: center;
-  margin: 8px 0 0;
+  margin: 6px 0 0;
+  white-space: nowrap;
 }
 
 .wm-card-title-bottom {
-  min-height: 22px;
+  min-height: 28px;
 }
 
 .wm-low-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 2px 6px;
   border-radius: 999px;
   background: #d71920;
   color: #fff;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 900;
+  vertical-align: middle;
+  margin-left: 4px;
+  box-shadow: 0 3px 8px rgba(215,25,32,0.2);
 }
 
+/* ── Side Tanks ── */
 .wm-tank-card-left,
 .wm-tank-card-right {
-  width: 144px;
+  width: 164px;
+}
+
+.wm-tank-card-left {
+  margin-left: 14px;
+}
+
+.wm-tank-card-right {
+  margin-left: 6px;
+  width: 148px;
+}
+
+.wm-tank-card-right .wm-tank-shell {
+  margin-right: 10px;
+}
+
+.wm-tank-card-right .wm-card-title {
+  padding-right: 10px;
 }
 
 .wm-tank-shell {
   position: relative;
-  width: 104px;
+  width: 156px;
   margin: 0 auto;
-  padding-top: 10px;
+  padding-top: 12px;
 }
 
 .wm-tank-lid {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 34px;
-  height: 10px;
-  border: 1.5px solid #555;
-  border-radius: 50%;
-  background: linear-gradient(180deg, #d9d9d9, #bdbdbd);
-  z-index: 2;
+  display: none;
 }
 
 .wm-tank-body {
   position: relative;
-  width: 76px;
-  height: 106px;
-  margin: 8px auto 0;
-  border: 2px solid #555;
-  border-radius: 14px 14px 0 0;
-  background: rgba(255, 255, 255, 0.78);
+  width: 108px;
+  height: 260px;
+  margin: 10px auto 0;
+  border: 3px solid #94a3b8;
+  border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(231,241,250,0.72));
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.72),
+    inset 10px 0 14px rgba(255,255,255,0.28),
+    inset -10px 0 14px rgba(72,96,122,0.08),
+    0 6px 12px rgba(27,52,78,0.08);
   overflow: hidden;
+}
+
+.wm-tank-body::before {
+  content: '';
+  position: absolute;
+  inset: 8px auto 10px 7px;
+  width: 12px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.08));
+  pointer-events: none;
+  z-index: 2;
+}
+
+.wm-tank-body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0) 28%),
+    linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0) 42%, rgba(255,255,255,0.08) 72%, rgba(255,255,255,0.18));
+  pointer-events: none;
+  z-index: 2;
 }
 
 .wm-tank-water {
   position: absolute;
   inset: auto 0 0 0;
-  background: #20dbe4;
+  background: linear-gradient(180deg, #49d9ea 0%, #26cadb 42%, #11b2c3 100%);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,0.35), inset 0 10px 16px rgba(255,255,255,0.12);
 }
 
+.wm-tank-water::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 8px;
+  background:
+    radial-gradient(circle at 15% 100%, rgba(255,255,255,0.55) 0 18%, transparent 19%),
+    radial-gradient(circle at 40% 0%, rgba(255,255,255,0.3) 0 22%, transparent 23%),
+    radial-gradient(circle at 70% 100%, rgba(255,255,255,0.4) 0 20%, transparent 21%),
+    linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.08));
+  opacity: 0.95;
+}
+
+.wm-tank-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  min-width: 72px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.84);
+  color: #0f172a;
+  font-family: Arial, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+/* ── Scale — perfectly aligned with the tank body (matches its exact height) ── */
+/* Tank body sits inside .wm-tank-shell with: padding-top:12px on shell + margin-top:10px
+   on body = 22px from shell top. Body has 3px border + 260px height. We anchor the
+   scale to the SAME box (top:22px, height:260px) so 100 lines up with the very top
+   edge and 0 lines up with the very bottom edge of the tank. */
 .wm-scale {
   position: absolute;
-  top: 19px;
-  bottom: 6px;
-  width: 26px;
+  top: 22px;
+  height: 260px;
   font-family: Arial, sans-serif;
-  font-size: 9px;
-  font-weight: 700;
-  color: #222;
+  font-size: 18px;
+  font-weight: 900;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .wm-scale-left {
-  left: -28px;
+  left: -32px;
+  width: 28px;
 }
 
 .wm-scale-right {
   right: -28px;
+  width: 24px;
 }
 
+/* Each label is a thin row; flex space-between guarantees uniform vertical spacing.
+   We override the inline `top` from JSX with !important so spacing stays even. */
 .wm-scale span {
-  position: absolute;
-  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 900;
+  white-space: nowrap;
+  line-height: 1;
+  position: relative;
+  height: 12px;
+  top: auto !important;
 }
 
 .wm-scale-left span {
-  left: 0;
+  justify-content: flex-end;
+  padding-right: 8px;
 }
 
 .wm-scale-right span {
-  right: 0;
+  justify-content: flex-start;
+  padding-left: 10px;
 }
 
+/* Tick mark sits exactly on the label's vertical center, flush with the tank edge */
 .wm-scale span::before {
   content: '';
   position: absolute;
@@ -132,235 +250,124 @@
   width: 6px;
   height: 1.5px;
   background: #222;
+  transform: translateY(-50%);
 }
 
-.wm-scale-left span::before {
-  left: 18px;
-}
+.wm-scale-left span::before { right: 0; }
+.wm-scale-right span::before { left: 0; }
 
-.wm-scale-right span::before {
-  right: 18px;
-}
-
-.wm-purification-card {
-  width: 260px;
-  padding-bottom: 22px;
-}
-
-.wm-purification-tank {
+/* ── Pipe Segments — no gap ── */
+.wm-segment {
   position: relative;
-  width: 200px;
-  height: 138px;
-  margin: 0 auto;
-  border: 5px solid #11939a;
-  border-radius: 50%;
-  background: #036d73;
-  box-shadow: inset -10px 0 0 rgba(0, 0, 0, 0.08);
+  flex: 0 0 48px;
+  width: 48px;
+  height: 8px;
   overflow: hidden;
+  border-radius: 999px;
+  margin-inline: -1px;
 }
 
-.wm-water-motion {
-  position: absolute;
-  inset: 12px 18px;
-  border-radius: 50%;
-  opacity: 0.65;
-}
-
-.wm-water-motion.is-active {
-  opacity: 1;
-}
-
-.wm-water-ring {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border: 3px solid rgba(116, 226, 234, 0.42);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.wm-water-ring-a {
-  width: 126px;
-  height: 56px;
-  border-top-color: rgba(130, 245, 255, 0.75);
-  border-bottom-color: rgba(0, 0, 0, 0);
-  animation: wm-water-spin-a 3.4s linear infinite;
-}
-
-.wm-water-ring-b {
-  width: 102px;
-  height: 42px;
-  border-left-color: rgba(130, 245, 255, 0.65);
-  border-right-color: rgba(0, 0, 0, 0);
-  animation: wm-water-spin-b 2.5s linear infinite;
-}
-
-.wm-water-ring-c {
-  width: 72px;
-  height: 26px;
-  border-top-color: rgba(178, 248, 252, 0.8);
-  border-left-color: rgba(0, 0, 0, 0);
-  animation: wm-water-spin-c 1.8s linear infinite;
-}
-
-.wm-water-glow {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 118px;
-  height: 54px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(82, 214, 223, 0.26) 0%, rgba(82, 214, 223, 0.08) 45%, rgba(0, 0, 0, 0) 72%);
-  animation: wm-water-pulse 2.2s ease-in-out infinite;
-}
-
-.wm-stirrer {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 18px;
-  height: 60px;
-  margin: -30px 0 0 -9px;
-  transform-origin: 50% 50%;
-}
-
-.wm-stirrer.is-spinning {
-  animation: wm-stirrer-spin 1.4s linear infinite;
-}
-
-.wm-stirrer-stick {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 7px;
-  height: 58px;
-  margin-left: -3.5px;
-  border-radius: 5px;
-  background: #b39d00;
-}
-
-.wm-stirrer::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  margin: -9px 0 0 -9px;
-  border-radius: 50%;
-  background: #1f1f1f;
-}
-
-.wm-pipes {
+.wm-segment-base,
+.wm-segment-flow {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  pointer-events: none;
+  border-radius: 999px;
 }
 
-.wm-pipe {
-  position: absolute;
+.wm-segment-base {
   background: #8e8e8e;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
 }
 
-.wm-pipe-mid-left,
-.wm-pipe-mid-left-flow {
-  top: 131px;
-  left: 162px;
-  width: 121px;
-  height: 10px;
-}
-
-.wm-pipe-mid-right,
-.wm-pipe-mid-right-flow {
-  top: 131px;
-  right: 162px;
-  width: 121px;
-  height: 10px;
-}
-
-.wm-pipe-mid-left-flow,
-.wm-pipe-mid-right-flow {
-  background: linear-gradient(90deg, rgba(32, 219, 228, 0.1), rgba(32, 219, 228, 0.75), rgba(32, 219, 228, 0.1));
+.wm-segment-flow {
+  inset: 1px 0;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(32,219,228,0) 0px,
+      rgba(32,219,228,0.18) 16px,
+      rgba(92,244,255,0.88) 32px,
+      rgba(32,219,228,0.18) 48px,
+      rgba(32,219,228,0) 64px
+    );
+  background-size: 64px 100%;
+  background-position: 0 50%;
   opacity: 0;
 }
 
-.wm-pipe-mid-left-flow.is-flowing,
-.wm-pipe-mid-right-flow.is-flowing {
+.wm-segment-flow.is-flowing {
   opacity: 1;
-  animation: wm-flow 1s linear infinite;
+  animation: wm-flow 1.2s linear infinite;
 }
 
-.wm-pipe-mid-right-flow.is-attack {
-  background: linear-gradient(90deg, rgba(215, 25, 32, 0.05), rgba(215, 25, 32, 0.8), rgba(215, 25, 32, 0.05));
+.wm-segment-flow.is-attack {
+  background: linear-gradient(90deg, rgba(215,25,32,0) 0%, rgba(215,25,32,0.22) 20%, rgba(255,92,96,0.92) 50%, rgba(215,25,32,0.22) 80%, rgba(215,25,32,0) 100%);
 }
 
-.wm-pump-row {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 108px;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 120px;
-  z-index: 3;
-}
-
+/* ── Pump Block ── */
 .wm-pump-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 0;
+  width: 64px;
 }
 
 .wm-pump-label-bottom {
-  min-height: 16px;
+  min-height: 42px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 8px;
+  width: 100%;
 }
 
 .wm-pump {
   position: relative;
-  width: 42px;
-  height: 42px;
-  margin: 0 8px;
+  width: 44px;
+  height: 44px;
+  filter: drop-shadow(0 2px 4px rgba(18,44,62,0.14));
 }
 
 .wm-pump-ring {
   position: absolute;
   inset: 0;
-  border: 3px solid #d71920;
+  border: 3px solid #ef4444;
   border-radius: 50%;
+  background: radial-gradient(circle at 30% 28%, rgba(255,255,255,0.95), rgba(255,255,255,0.65) 30%, rgba(255,255,255,0.16) 31%, rgba(255,255,255,0) 32%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.72);
 }
 
 .wm-pump-housing {
   position: absolute;
   inset: 8px;
-  border: 2px solid #111;
+  border: 1.5px solid #24313f;
   border-radius: 50%;
-  background: #fff;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #eef2f6 52%, #cfd8e1 100%);
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.85), inset 0 -2px 3px rgba(36,49,63,0.12);
 }
 
 .wm-pump-port {
   position: absolute;
-  top: 13px;
-  width: 9px;
-  height: 14px;
-  border: 3px solid #d71920;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border: 3px solid #ef4444;
   border-left: 0;
-  border-radius: 0 4px 4px 0;
+  border-radius: 0 3px 3px 0;
 }
 
 .wm-pump-port-left {
-  left: -9px;
-  transform: scaleX(-1);
+  left: -8px;
+  transform: translateY(-50%) scaleX(-1);
 }
 
 .wm-pump-port-right {
-  right: -9px;
+  right: -8px;
 }
 
 .wm-pump-fan {
@@ -374,41 +381,28 @@
 
 .wm-pump-blade {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 11px;
-  height: 4px;
-  margin-top: -2px;
+  top: 50%; left: 50%;
+  width: 14px; height: 5px;
+  margin-top: -2.5px;
   transform-origin: 0 50%;
-  background: #111;
+  background: linear-gradient(90deg, #101820, #465867);
   border-radius: 999px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-.blade-a {
-  transform: rotate(0deg) translateX(2px);
-}
-
-.blade-b {
-  transform: rotate(90deg) translateX(2px);
-}
-
-.blade-c {
-  transform: rotate(180deg) translateX(2px);
-}
-
-.blade-d {
-  transform: rotate(270deg) translateX(2px);
-}
+.blade-a { transform: rotate(0deg) translateX(2px); }
+.blade-b { transform: rotate(90deg) translateX(2px); }
+.blade-c { transform: rotate(180deg) translateX(2px); }
+.blade-d { transform: rotate(270deg) translateX(2px); }
 
 .wm-pump-center {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
+  top: 50%; left: 50%;
+  width: 10px; height: 10px;
+  margin: -5px 0 0 -5px;
   border-radius: 50%;
-  background: #111;
+  background: radial-gradient(circle at 35% 35%, #5b6e7f, #14202b 72%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
 }
 
 .wm-pump.is-attack .wm-pump-ring,
@@ -416,92 +410,240 @@
   border-color: #b30000;
 }
 
+/* ── Purification (Circular) Tank ── */
+.wm-purification-card {
+  width: 208px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.wm-purification-tank {
+  position: relative;
+  width: 170px;
+  height: 170px;
+  border: 8px solid #6f7a86;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #48f1ff 0%, #18d7e9 22%, #099fbe 48%, #046d8d 74%, #0b4866 100%);
+  box-shadow:
+    inset -10px 0 0 rgba(0,0,0,0.08),
+    inset 0 0 30px rgba(139,252,255,0.24),
+    0 0 0 2px rgba(255,255,255,0.18);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wm-purification-water {
+  position: absolute;
+  inset: 18px 20px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(164,252,255,0.28) 0%, rgba(95,241,248,0.12) 42%, rgba(0,0,0,0) 72%);
+  opacity: 0.9;
+}
+
+.wm-purification-water.is-active { opacity: 1; }
+
+.wm-purification-blob,
+.wm-purification-mist {
+  position: absolute;
+  pointer-events: none;
+}
+
+.wm-purification-blob {
+  border-radius: 38% 62% 57% 43% / 42% 41% 59% 58%;
+  filter: blur(10px);
+  mix-blend-mode: screen;
+  will-change: transform, border-radius, opacity;
+}
+
+.wm-purification-blob-a {
+  inset: 16% 20% 22% 18%;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.4), rgba(126,246,255,0.18) 48%, rgba(0,0,0,0) 72%);
+  animation: wm-purification-blob-a 8s ease-in-out infinite;
+}
+
+.wm-purification-blob-b {
+  inset: 24% 14% 30% 28%;
+  background: radial-gradient(circle at 58% 42%, rgba(222,255,255,0.28), rgba(90,239,248,0.16) 50%, rgba(0,0,0,0) 76%);
+  animation: wm-purification-blob-b 6.6s ease-in-out infinite;
+}
+
+.wm-purification-blob-c {
+  inset: 28% 26% 18% 16%;
+  background: radial-gradient(circle at 48% 58%, rgba(255,255,255,0.22), rgba(116,244,255,0.14) 46%, rgba(0,0,0,0) 72%);
+  animation: wm-purification-blob-c 7.4s ease-in-out infinite;
+}
+
+.wm-purification-blob-d {
+  inset: 18% 18% 26% 24%;
+  background: radial-gradient(circle at 42% 40%, rgba(196,252,255,0.18), rgba(84,233,244,0.12) 44%, rgba(0,0,0,0) 70%);
+  animation: wm-purification-blob-d 5.8s ease-in-out infinite;
+}
+
+.wm-purification-mist {
+  inset: 10% 12%;
+  border-radius: 50%;
+  opacity: 0.28;
+  will-change: transform, opacity;
+}
+
+.wm-purification-mist::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 24% 24%, rgba(255,255,255,0.55) 0 1.1%, transparent 1.8%),
+    radial-gradient(circle at 72% 26%, rgba(255,255,255,0.48) 0 1%, transparent 1.7%),
+    radial-gradient(circle at 78% 66%, rgba(255,255,255,0.42) 0 1.1%, transparent 1.8%),
+    radial-gradient(circle at 20% 74%, rgba(255,255,255,0.44) 0 1.1%, transparent 1.8%),
+    radial-gradient(circle at 48% 42%, rgba(255,255,255,0.36) 0 0.8%, transparent 1.4%);
+}
+
+.wm-purification-mist-a { animation: wm-purification-mist-a 9s linear infinite; }
+.wm-purification-mist-b { inset: 16% 18%; opacity: 0.18; animation: wm-purification-mist-b 7s linear infinite; }
+
+.wm-purification-glow {
+  position: absolute;
+  inset: 20px 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, rgba(210,255,255,0.22) 0%, rgba(95,241,248,0.12) 42%, rgba(0,0,0,0) 72%);
+  animation: wm-purification-glow 2.8s ease-in-out infinite;
+}
+
+/* Stirrer — absolute center */
+.wm-stirrer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 60px;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  z-index: 2;
+}
+
+.wm-stirrer.is-spinning {
+  animation: wm-stirrer-spin 1.4s linear infinite;
+}
+
+.wm-stirrer-stick {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 7px; height: 58px;
+  margin-left: -3.5px;
+  border-radius: 5px;
+  background: #b39d00;
+}
+
+.wm-stirrer::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 18px; height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: #1f1f1f;
+}
+
+/* ═══ KEYFRAMES ═══ */
 @keyframes wm-stirrer-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
-
 @keyframes wm-pump-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
-
 @keyframes wm-flow {
-  from {
-    transform: translateX(-18px);
-  }
-  to {
-    transform: translateX(18px);
-  }
+  from { background-position: 0 50%; }
+  to   { background-position: 64px 50%; }
+}
+@keyframes wm-purification-blob-a {
+  from { transform: rotate(0deg) scale(1) translate3d(0,0,0); border-radius: 38% 62% 57% 43%/42% 41% 59% 58%; opacity: 0.7; }
+  to   { transform: rotate(360deg) scale(1.04) translate3d(4px,-3px,0); border-radius: 58% 42% 46% 54%/35% 58% 42% 65%; opacity: 0.82; }
+}
+@keyframes wm-purification-blob-b {
+  from { transform: rotate(0deg) scale(1) translate3d(0,0,0); border-radius: 46% 54% 40% 60%/60% 38% 62% 40%; opacity: 0.46; }
+  to   { transform: rotate(360deg) scale(0.96) translate3d(-5px,5px,0); border-radius: 61% 39% 56% 44%/44% 61% 39% 56%; opacity: 0.64; }
+}
+@keyframes wm-purification-blob-c {
+  from { transform: rotate(0deg) scale(1); border-radius: 50% 50% 43% 57%/47% 42% 58% 53%; opacity: 0.32; }
+  to   { transform: rotate(360deg) scale(1.05); border-radius: 41% 59% 63% 37%/56% 38% 62% 44%; opacity: 0.5; }
+}
+@keyframes wm-purification-blob-d {
+  from { transform: rotate(0deg) scale(1); border-radius: 57% 43% 51% 49%/39% 53% 47% 61%; opacity: 0.22; }
+  to   { transform: rotate(360deg) scale(0.94) translate3d(3px,2px,0); border-radius: 35% 65% 48% 52%/59% 39% 61% 41%; opacity: 0.42; }
+}
+@keyframes wm-purification-mist-a {
+  from { transform: rotate(0deg); opacity: 0.22; }
+  to   { transform: rotate(360deg); opacity: 0.34; }
+}
+@keyframes wm-purification-mist-b {
+  from { transform: rotate(0deg); opacity: 0.12; }
+  to   { transform: rotate(360deg); opacity: 0.22; }
+}
+@keyframes wm-purification-glow {
+  from { transform: rotate(0deg) scale(1); opacity: 0.75; }
+  to   { transform: rotate(360deg) scale(1); opacity: 0.75; }
 }
 
-@keyframes wm-water-spin-a {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-@keyframes wm-water-spin-b {
-  from {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-}
-
-@keyframes wm-water-spin-c {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg) scaleX(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) rotate(180deg) scaleX(1.08);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg) scaleX(1);
-  }
-}
-
-@keyframes wm-water-pulse {
-  0%, 100% {
-    opacity: 0.5;
-    transform: translate(-50%, -50%) scale(0.96);
-  }
-  50% {
-    opacity: 0.92;
-    transform: translate(-50%, -50%) scale(1.04);
-  }
-}
-
+/* ═══ RESPONSIVE ═══ */
 @media (max-width: 860px) {
-  .wm-diagram {
-    transform-origin: top center;
-    transform: scale(0.84);
-    width: 780px;
-    margin-left: calc((100% - 780px) / 2);
-  }
+  .wm-diagram { width: 100%; }
+  .wm-flow-layout { gap: 0; }
+  .wm-purification-card { width: 180px; }
+  .wm-purification-tank { width: 140px; height: 140px; }
+  .wm-segment { flex-basis: 40px; width: 40px; }
 }
-
 @media (max-width: 680px) {
-  .water-management-diagram {
-    overflow-x: auto;
-    padding-bottom: 14px;
-  }
-
-  .wm-diagram {
-    transform: none;
-    width: 780px;
-    margin-left: 0;
-  }
+  .water-management-diagram { overflow-x: auto; padding-bottom: 14px; }
+  .wm-diagram { width: max-content; min-width: 780px; }
+}
+@media (max-width: 479px) {
+  .wm-diagram { padding: 4px; width: 100%; overflow-x: auto; }
+  .wm-flow-layout { gap: 0; min-width: max-content; padding: 0 4px; }
+  .wm-tank-card-left, .wm-tank-card-right { width: 140px; }
+  .wm-tank-card-right { width: 128px; }
+  .wm-tank-shell { width: 100px; }
+  .wm-tank-body { width: 100px; height: 140px; }
+  .wm-card-title, .wm-pump-label { font-size: 18px; font-weight: 900; }
+  .wm-tank-value { font-size: 18px; min-width: 52px; padding: 6px 10px; }
+  .wm-scale { font-size: 18px; height: 140px; top: 22px; }
+  .wm-scale span { height: 10px; }
+  .wm-scale-left { left: -26px; width: 24px; }
+  .wm-scale-right { right: -28px; width: 24px; }
+  .wm-segment { flex-basis: 36px; width: 36px; }
+  .wm-purification-card { width: 140px; }
+  .wm-purification-tank { width: 110px; height: 110px; }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+  .wm-diagram { padding: 4px 6px 0; width: 100%; }
+  .wm-flow-layout { gap: 0; justify-content: center; }
+  .wm-tank-card-left, .wm-tank-card-right { width: 160px; }
+  .wm-tank-card-right { width: 146px; }
+  .wm-tank-body { width: 120px; height: 160px; }
+  .wm-card-title, .wm-pump-label { font-size: 18px; }
+  .wm-tank-value { font-size: 20px; min-width: 56px; }
+  .wm-segment { flex-basis: 40px; width: 40px; }
+  .wm-purification-card { width: 160px; }
+  .wm-purification-tank { width: 130px; height: 130px; }
+  .wm-scale { height: 160px; top: 22px; }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .wm-diagram { width: min(100%, 800px); }
+  .wm-flow-layout { gap: 0; }
+  .wm-card-title, .wm-pump-label { font-size: 22px; }
+  .wm-purification-card { width: 200px; }
+}
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .wm-diagram { width: min(100%, 850px); }
+}
+@media (min-width: 1441px) {
+  .wm-diagram { width: min(100%, 900px); }
 }
