@@ -1,0 +1,146 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #ffffff;
+  color: #0f172a;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.app {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Header ── */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1.5px solid #f1f5f9;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-text h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.header-text h1 span {
+  color: #0ea5e9;
+}
+
+.header-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+}
+
+/* ── Section Dividers ── */
+.section-divider {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-divider span {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #f1f5f9;
+}
+
+/* ── Pipeline Section ── */
+.pipeline-section {
+  background: white;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 16px;
+  margin: 0 16px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.04);
+}
+
+/* ── Bottom Section ── */
+.bottom-section {
+  display: flex;
+  gap: 16px;
+  margin: 0 16px 16px;
+  align-items: flex-start;
+  flex: 1;
+  overflow: hidden;
+}
+
+.bottom-section > .control-panel {
+  flex: 0 0 360px;
+}
+
+.bottom-section > .house-grid-wrapper {
+  flex: 1 1 0;
+  max-width: none;
+}
+
+.bottom-section > * {
+  min-width: 260px;
+}
+
+/* ── Main ── */
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+

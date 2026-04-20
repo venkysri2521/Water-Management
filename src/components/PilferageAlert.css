@@ -1,0 +1,222 @@
+.pilferage-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: overlay-in 0.2s ease;
+}
+
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pilferage-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 36px 40px;
+  max-width: 440px;
+  width: 90%;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+  border: 2px solid #fca5a5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  animation: modal-in 0.25s ease;
+}
+
+.buzzing {
+  animation: modal-in 0.25s ease, modal-shake 0.3s ease-in-out;
+}
+
+@keyframes modal-in {
+  from { transform: scale(0.9) translateY(-10px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes modal-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* ── Buzzer ── */
+.buzzer-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buzzer-body {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.buzzer-core {
+  width: 32px;
+  height: 32px;
+  background: radial-gradient(circle, #ef4444, #b91c1c);
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(239,68,68,0.5);
+  z-index: 3;
+}
+
+.buzz-active .buzzer-core {
+  animation: buzz-core 0.3s ease-in-out infinite;
+}
+
+@keyframes buzz-core {
+  0%, 100% { transform: scale(1); box-shadow: 0 2px 12px rgba(239,68,68,0.5); }
+  50% { transform: scale(1.12); box-shadow: 0 4px 24px rgba(239,68,68,0.8); }
+}
+
+.buzzer-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(239,68,68,0.3);
+}
+.r1 { width: 44px; height: 44px; border-color: rgba(239,68,68,0.5); }
+.r2 { width: 54px; height: 54px; border-color: rgba(239,68,68,0.3); }
+.r3 { width: 64px; height: 64px; border-color: rgba(239,68,68,0.15); }
+
+/* Buzzer waves */
+.buzz-waves {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bwave {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #ef4444;
+  animation: wave-expand 1.2s ease-out infinite;
+  opacity: 0;
+}
+
+.bw1 { width: 30px; height: 30px; animation-delay: 0s; }
+.bw2 { width: 30px; height: 30px; animation-delay: 0.4s; }
+.bw3 { width: 30px; height: 30px; animation-delay: 0.8s; }
+
+@keyframes wave-expand {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(3.5); opacity: 0; }
+}
+
+/* ── Content ── */
+.pilferage-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.pilferage-badge {
+  background: #fef2f2;
+  border: 1.5px solid #fca5a5;
+  color: #dc2626;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 6px;
+  letter-spacing: 0.06em;
+  animation: badge-flash 0.6s ease-in-out infinite;
+}
+
+@keyframes badge-flash {
+  0%, 100% { background: #fef2f2; }
+  50% { background: #fee2e2; }
+}
+
+.pilferage-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+}
+
+.pilferage-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pilferage-info {
+  display: flex;
+  gap: 16px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px 16px;
+  width: 100%;
+}
+
+.pinfo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.pinfo-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.pinfo-val {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.pinfo-val.red {
+  color: #dc2626;
+  animation: badge-flash 0.6s ease-in-out infinite;
+}
+
+.pilferage-dismiss {
+  width: 100%;
+  padding: 12px;
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.pilferage-dismiss:hover {
+  background: #b91c1c;
+}
+
+

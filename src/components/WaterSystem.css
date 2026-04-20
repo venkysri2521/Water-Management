@@ -1,0 +1,507 @@
+.water-management-diagram {
+  padding: 20px 12px 8px;
+}
+
+.wm-diagram {
+  position: relative;
+  width: min(100%, 900px);
+  margin: 0 auto;
+  padding: 6px 8px 0;
+}
+
+.wm-top-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.wm-tank-card,
+.wm-purification-card {
+  position: relative;
+  z-index: 2;
+}
+
+.wm-card-title,
+.wm-pump-label {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  line-height: 1;
+  color: #111;
+}
+
+.wm-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin: 8px 0 0;
+}
+
+.wm-card-title-bottom {
+  min-height: 22px;
+}
+
+.wm-low-pill {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #d71920;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.wm-tank-card-left,
+.wm-tank-card-right {
+  width: 144px;
+}
+
+.wm-tank-shell {
+  position: relative;
+  width: 104px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.wm-tank-lid {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34px;
+  height: 10px;
+  border: 1.5px solid #555;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #d9d9d9, #bdbdbd);
+  z-index: 2;
+}
+
+.wm-tank-body {
+  position: relative;
+  width: 76px;
+  height: 106px;
+  margin: 8px auto 0;
+  border: 2px solid #555;
+  border-radius: 14px 14px 0 0;
+  background: rgba(255, 255, 255, 0.78);
+  overflow: hidden;
+}
+
+.wm-tank-water {
+  position: absolute;
+  inset: auto 0 0 0;
+  background: #20dbe4;
+}
+
+.wm-scale {
+  position: absolute;
+  top: 19px;
+  bottom: 6px;
+  width: 26px;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #222;
+}
+
+.wm-scale-left {
+  left: -28px;
+}
+
+.wm-scale-right {
+  right: -28px;
+}
+
+.wm-scale span {
+  position: absolute;
+  transform: translateY(-50%);
+}
+
+.wm-scale-left span {
+  left: 0;
+}
+
+.wm-scale-right span {
+  right: 0;
+}
+
+.wm-scale span::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 6px;
+  height: 1.5px;
+  background: #222;
+}
+
+.wm-scale-left span::before {
+  left: 18px;
+}
+
+.wm-scale-right span::before {
+  right: 18px;
+}
+
+.wm-purification-card {
+  width: 260px;
+  padding-bottom: 22px;
+}
+
+.wm-purification-tank {
+  position: relative;
+  width: 200px;
+  height: 138px;
+  margin: 0 auto;
+  border: 5px solid #11939a;
+  border-radius: 50%;
+  background: #036d73;
+  box-shadow: inset -10px 0 0 rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.wm-water-motion {
+  position: absolute;
+  inset: 12px 18px;
+  border-radius: 50%;
+  opacity: 0.65;
+}
+
+.wm-water-motion.is-active {
+  opacity: 1;
+}
+
+.wm-water-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 3px solid rgba(116, 226, 234, 0.42);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.wm-water-ring-a {
+  width: 126px;
+  height: 56px;
+  border-top-color: rgba(130, 245, 255, 0.75);
+  border-bottom-color: rgba(0, 0, 0, 0);
+  animation: wm-water-spin-a 3.4s linear infinite;
+}
+
+.wm-water-ring-b {
+  width: 102px;
+  height: 42px;
+  border-left-color: rgba(130, 245, 255, 0.65);
+  border-right-color: rgba(0, 0, 0, 0);
+  animation: wm-water-spin-b 2.5s linear infinite;
+}
+
+.wm-water-ring-c {
+  width: 72px;
+  height: 26px;
+  border-top-color: rgba(178, 248, 252, 0.8);
+  border-left-color: rgba(0, 0, 0, 0);
+  animation: wm-water-spin-c 1.8s linear infinite;
+}
+
+.wm-water-glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 118px;
+  height: 54px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(82, 214, 223, 0.26) 0%, rgba(82, 214, 223, 0.08) 45%, rgba(0, 0, 0, 0) 72%);
+  animation: wm-water-pulse 2.2s ease-in-out infinite;
+}
+
+.wm-stirrer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 60px;
+  margin: -30px 0 0 -9px;
+  transform-origin: 50% 50%;
+}
+
+.wm-stirrer.is-spinning {
+  animation: wm-stirrer-spin 1.4s linear infinite;
+}
+
+.wm-stirrer-stick {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 7px;
+  height: 58px;
+  margin-left: -3.5px;
+  border-radius: 5px;
+  background: #b39d00;
+}
+
+.wm-stirrer::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin: -9px 0 0 -9px;
+  border-radius: 50%;
+  background: #1f1f1f;
+}
+
+.wm-pipes {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wm-pipe {
+  position: absolute;
+  background: #8e8e8e;
+}
+
+.wm-pipe-mid-left,
+.wm-pipe-mid-left-flow {
+  top: 131px;
+  left: 162px;
+  width: 121px;
+  height: 10px;
+}
+
+.wm-pipe-mid-right,
+.wm-pipe-mid-right-flow {
+  top: 131px;
+  right: 162px;
+  width: 121px;
+  height: 10px;
+}
+
+.wm-pipe-mid-left-flow,
+.wm-pipe-mid-right-flow {
+  background: linear-gradient(90deg, rgba(32, 219, 228, 0.1), rgba(32, 219, 228, 0.75), rgba(32, 219, 228, 0.1));
+  opacity: 0;
+}
+
+.wm-pipe-mid-left-flow.is-flowing,
+.wm-pipe-mid-right-flow.is-flowing {
+  opacity: 1;
+  animation: wm-flow 1s linear infinite;
+}
+
+.wm-pipe-mid-right-flow.is-attack {
+  background: linear-gradient(90deg, rgba(215, 25, 32, 0.05), rgba(215, 25, 32, 0.8), rgba(215, 25, 32, 0.05));
+}
+
+.wm-pump-row {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 108px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 120px;
+  z-index: 3;
+}
+
+.wm-pump-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.wm-pump-label-bottom {
+  min-height: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.wm-pump {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  margin: 0 8px;
+}
+
+.wm-pump-ring {
+  position: absolute;
+  inset: 0;
+  border: 3px solid #d71920;
+  border-radius: 50%;
+}
+
+.wm-pump-housing {
+  position: absolute;
+  inset: 8px;
+  border: 2px solid #111;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.wm-pump-port {
+  position: absolute;
+  top: 13px;
+  width: 9px;
+  height: 14px;
+  border: 3px solid #d71920;
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.wm-pump-port-left {
+  left: -9px;
+  transform: scaleX(-1);
+}
+
+.wm-pump-port-right {
+  right: -9px;
+}
+
+.wm-pump-fan {
+  position: absolute;
+  inset: 0;
+}
+
+.wm-pump-fan.is-spinning {
+  animation: wm-pump-spin 0.9s linear infinite;
+}
+
+.wm-pump-blade {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 4px;
+  margin-top: -2px;
+  transform-origin: 0 50%;
+  background: #111;
+  border-radius: 999px;
+}
+
+.blade-a {
+  transform: rotate(0deg) translateX(2px);
+}
+
+.blade-b {
+  transform: rotate(90deg) translateX(2px);
+}
+
+.blade-c {
+  transform: rotate(180deg) translateX(2px);
+}
+
+.blade-d {
+  transform: rotate(270deg) translateX(2px);
+}
+
+.wm-pump-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #111;
+}
+
+.wm-pump.is-attack .wm-pump-ring,
+.wm-pump.is-attack .wm-pump-port {
+  border-color: #b30000;
+}
+
+@keyframes wm-stirrer-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wm-pump-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wm-flow {
+  from {
+    transform: translateX(-18px);
+  }
+  to {
+    transform: translateX(18px);
+  }
+}
+
+@keyframes wm-water-spin-a {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes wm-water-spin-b {
+  from {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@keyframes wm-water-spin-c {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg) scaleX(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scaleX(1.08);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg) scaleX(1);
+  }
+}
+
+@keyframes wm-water-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.96);
+  }
+  50% {
+    opacity: 0.92;
+    transform: translate(-50%, -50%) scale(1.04);
+  }
+}
+
+@media (max-width: 860px) {
+  .wm-diagram {
+    transform-origin: top center;
+    transform: scale(0.84);
+    width: 780px;
+    margin-left: calc((100% - 780px) / 2);
+  }
+}
+
+@media (max-width: 680px) {
+  .water-management-diagram {
+    overflow-x: auto;
+    padding-bottom: 14px;
+  }
+
+  .wm-diagram {
+    transform: none;
+    width: 780px;
+    margin-left: 0;
+  }
+}

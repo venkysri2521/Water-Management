@@ -1,0 +1,283 @@
+.house-grid-wrapper {
+  flex: 1;
+  width: 100%;
+  max-width: none;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.hg-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.hg-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: #0f172a;
+}
+
+.hg-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.house-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+/* ── House Card ── */
+.house-card {
+  background: #fafafa;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.house-card:hover {
+  border-color: var(--house-color);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.house-card.house-attack {
+  border-color: #fca5a5;
+  background: #fff5f5;
+  animation: card-attack 0.4s ease-in-out infinite;
+}
+
+@keyframes card-attack {
+  0%, 100% { border-color: #fca5a5; }
+  50% { border-color: #ef4444; }
+}
+
+/* ── House Icon Area ── */
+.house-icon-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 8px 0;
+}
+
+.house-svg {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+  transition: transform 0.2s;
+}
+
+.house-svg.house-active {
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.12));
+}
+
+.smoke {
+  animation: smoke-rise 1.5s ease-in-out infinite;
+}
+.s1 { animation-delay: 0s; }
+.s2 { animation-delay: 0.4s; }
+
+@keyframes smoke-rise {
+  0% { transform: translateY(0) scale(1); opacity: 0.6; }
+  100% { transform: translateY(-8px) scale(1.5); opacity: 0; }
+}
+
+.led-indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+
+.led-green {
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  animation: led-blink 1s ease-in-out infinite;
+}
+
+.led-red {
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239,68,68,0.4);
+}
+
+@keyframes led-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── House Info ── */
+.house-info {
+  text-align: center;
+}
+
+.house-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.house-id {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* ── Wallet ── */
+.wallet-section {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.wallet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.wallet-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.wallet-amount {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.wallet-low {
+  color: #ef4444;
+  animation: pulse-badge 0.8s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.wallet-bar-bg {
+  height: 5px;
+  background: #f1f5f9;
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 4px;
+}
+
+.wallet-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.wallet-meta {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* ── Controls ── */
+.house-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.tap-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1.5px solid;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tap-on {
+  background: color-mix(in srgb, var(--c) 12%, white);
+  border-color: color-mix(in srgb, var(--c) 40%, white);
+  color: var(--c);
+}
+
+.tap-off {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+.tap-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.recharge-row {
+  display: flex;
+  gap: 4px;
+}
+
+.recharge-input {
+  width: 42px;
+  padding: 5px 6px;
+  border: 1px solid #e2e8f0;
+  border-radius: 5px;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  color: #0f172a;
+  background: white;
+  text-align: center;
+}
+
+.recharge-input:focus {
+  outline: none;
+  border-color: var(--c);
+}
+
+.recharge-btn {
+  flex: 1;
+  padding: 5px 7px;
+  border-radius: 5px;
+  border: 1.5px solid;
+  background: color-mix(in srgb, var(--c) 10%, white);
+  border-color: color-mix(in srgb, var(--c) 30%, white);
+  color: var(--c);
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.recharge-btn:hover {
+  background: color-mix(in srgb, var(--c) 18%, white);
+  border-color: var(--c);
+}
+
+
