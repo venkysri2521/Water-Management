@@ -3,7 +3,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 .water-management-diagram {
-  padding: 8px 16px 8px 8px;
+  padding: 8px 56px 8px 8px;  /* extra right padding so Main Tank's right scale isn't clipped */
   height: 100%;
   width: 100%;
   display: flex;
@@ -14,9 +14,9 @@
 
 .wm-diagram {
   width: 100%;
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 0 24px 0 8px;
+  padding: 0 8px;
   display: flex;
   flex: 1;
   align-items: center;
@@ -24,17 +24,15 @@
   min-height: 0;
 }
 
-/* ── Main flow row: single horizontal axis, equal gaps ── */
+/* ── Main flow row: single horizontal axis ── */
 .wm-flow-layout {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 0;
   width: 100%;
-  transform: translateY(0);
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: -8px;
+  margin-left: 0;
+  padding: 0;
 }
 
 .wm-tank-card,
@@ -44,13 +42,13 @@
   flex: 0 0 auto;
 }
 
-/* ── Labels ── */
+/* ── Labels (min 21px everywhere) ── */
 .wm-card-title,
 .wm-pump-label {
   font-family: Arial, sans-serif;
-  font-size: 24px;
+  font-size: 21px;
   font-weight: 800;
-  line-height: 1;
+  line-height: 1.2;
   color: #111;
 }
 
@@ -72,45 +70,67 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 999px;
   background: #d71920;
   color: #fff;
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 900;
   vertical-align: middle;
   margin-left: 4px;
   box-shadow: 0 3px 8px rgba(215,25,32,0.2);
 }
 
-/* ── Side Tanks ── */
-.wm-tank-card-left,
-.wm-tank-card-right {
-  width: 240px;
-}
-
+/* ── Side Tanks (Reservoir — left) ── */
 .wm-tank-card-left {
-  margin-left: 14px;
+  width: 170px;
+  margin-left: 0;
 }
 
+/* ── Main Tank (right) — narrower card with visible right-side scale ── */
 .wm-tank-card-right {
-  margin-left: 6px;
-  width: 240px;
+  width: 170px;       /* tank body(100) + shell margin(10 each side) + scale room(~48px) */
+  margin-left: 0;
+  overflow: visible;  /* let the scale render outside if needed */
 }
 
 .wm-tank-card-right .wm-tank-shell {
-  margin-right: 28px;
+  margin-right: 0;
+  margin-left: 8px;   /* shift shell left so scale has room on the right */
+  width: 110px;
+  overflow: visible;
+}
+
+.wm-tank-card-right .wm-tank-body {
+  width: 96px;
+  height: 210px;
 }
 
 .wm-tank-card-right .wm-card-title {
-  padding-right: 28px;
+  padding-right: 0;
+  padding-left: 0;
+  font-size: 21px;
+  justify-content: flex-start;
+  margin-left: 8px;
 }
 
+.wm-tank-card-right .wm-scale {
+  height: 210px;
+  top: 18px;
+}
+
+/* Place scale tightly to the right of the tank body */
+.wm-tank-card-right .wm-scale-right {
+  right: -48px;
+  width: 44px;
+}
+
+/* ── Shared tank shell ── */
 .wm-tank-shell {
   position: relative;
-  width: 200px;
+  width: 140px;
   margin: 0 auto;
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 .wm-tank-lid {
@@ -119,9 +139,9 @@
 
 .wm-tank-body {
   position: relative;
-  width: 170px;
-  height: 280px;
-  margin: 10px auto 0;
+  width: 120px;
+  height: 210px;
+  margin: 8px auto 0;
   border: 3px solid #94a3b8;
   border-radius: 12px 12px 8px 8px;
   background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(231,241,250,0.72));
@@ -137,7 +157,7 @@
   content: '';
   position: absolute;
   inset: 8px auto 10px 7px;
-  width: 12px;
+  width: 10px;
   border-radius: 999px;
   background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.08));
   pointer-events: none;
@@ -181,28 +201,24 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 4;
-  min-width: 72px;
-  padding: 8px 12px;
+  min-width: 56px;
+  padding: 6px 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.84);
   color: #0f172a;
   font-family: Arial, sans-serif;
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 900;
   line-height: 1;
   text-align: center;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
 }
 
-/* ── Scale — perfectly aligned with the tank body (matches its exact height) ── */
-/* Tank body sits inside .wm-tank-shell with: padding-top:12px on shell + margin-top:10px
-   on body = 22px from shell top. Body has 3px border + 260px height. We anchor the
-   scale to the SAME box (top:22px, height:260px) so 100 lines up with the very top
-   edge and 0 lines up with the very bottom edge of the tank. */
+/* ── Scale — aligned to tank body ── */
 .wm-scale {
   position: absolute;
-  top: 22px;
-  height: 280px;
+  top: 16px;
+  height: 210px;
   font-family: Arial, sans-serif;
   font-size: 16px;
   font-weight: 900;
@@ -216,7 +232,7 @@
 }
 
 .wm-scale-left {
-  left: -32px;
+  left: -30px;
   width: 28px;
 }
 
@@ -225,15 +241,13 @@
   width: 26px;
 }
 
-/* Each label is a thin row; flex space-between guarantees uniform vertical spacing.
-   We override the inline `top` from JSX with !important so spacing stays even. */
 .wm-scale span {
   display: flex;
   align-items: center;
   font-size: 16px;
   font-weight: 900;
   white-space: nowrap;
-  line-height: 1;
+  line-height: 2;
   position: relative;
   height: 12px;
   top: auto !important;
@@ -249,7 +263,6 @@
   padding-left: 10px;
 }
 
-/* Tick mark sits exactly on the label's vertical center, flush with the tank edge */
 .wm-scale span::before {
   content: '';
   position: absolute;
@@ -263,15 +276,16 @@
 .wm-scale-left span::before { right: 0; }
 .wm-scale-right span::before { left: 0; }
 
-/* ── Pipe Segments — no gap ── */
+/* ── Pipe Segments ── */
 .wm-segment {
   position: relative;
-  flex: 0 0 80px;
-  width: 80px;
+  flex: 1 1 0;
+  min-width: 20px;
+  max-width: 60px;
   height: 12px;
   overflow: hidden;
   border-radius: 999px;
-  margin-inline: 8px;
+  margin-inline: 4px;
 }
 
 .wm-segment-base,
@@ -317,25 +331,25 @@
   flex-direction: column;
   align-items: center;
   gap: 0;
-  width: 96px;
+  width: 90px;
 }
 
 .wm-pump-label-bottom {
-  min-height: 50px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 900;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 8px;
   width: 100%;
 }
 
 .wm-pump {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   filter: drop-shadow(0 2px 4px rgba(18,44,62,0.14));
 }
 
@@ -389,8 +403,8 @@
 .wm-pump-blade {
   position: absolute;
   top: 50%; left: 50%;
-  width: 22px; height: 7px;
-  margin-top: -3.5px;
+  width: 20px; height: 6px;
+  margin-top: -3px;
   transform-origin: 0 50%;
   background: linear-gradient(90deg, #101820, #465867);
   border-radius: 999px;
@@ -419,7 +433,7 @@
 
 /* ── Purification (Circular) Tank ── */
 .wm-purification-card {
-  width: 320px;
+  width: 230px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -428,9 +442,9 @@
 
 .wm-purification-tank {
   position: relative;
-  width: 280px;
-  height: 280px;
-  border: 10px solid #6f7a86;
+  width: 210px;
+  height: 210px;
+  border: 8px solid #6f7a86;
   border-radius: 50%;
   background:
     radial-gradient(circle at 50% 50%, #48f1ff 0%, #18d7e9 22%, #099fbe 48%, #046d8d 74%, #0b4866 100%);
@@ -523,7 +537,7 @@
   animation: wm-purification-glow 2.8s ease-in-out infinite;
 }
 
-/* Stirrer — absolute center */
+/* Stirrer */
 .wm-stirrer {
   position: absolute;
   top: 50%;
@@ -615,15 +629,14 @@
 @media (max-width: 479px) {
   .wm-diagram { padding: 4px; width: 100%; overflow-x: auto; }
   .wm-flow-layout { gap: 0; min-width: max-content; padding: 0 4px; }
-  .wm-tank-card-left, .wm-tank-card-right { width: 140px; }
-  .wm-tank-card-right { width: 128px; }
-  .wm-tank-shell { width: 100px; }
-  .wm-tank-body { width: 100px; height: 140px; }
-  .wm-card-title, .wm-pump-label { font-size: 18px; font-weight: 900; }
-  .wm-tank-value { font-size: 18px; min-width: 52px; padding: 6px 10px; }
-  .wm-scale { font-size: 18px; height: 140px; top: 22px; }
-  .wm-scale span { height: 10px; }
-  .wm-scale-left { left: -26px; width: 24px; }
+  .wm-tank-card-left, .wm-tank-card-right { width: 130px; }
+  .wm-tank-shell { width: 110px; }
+  .wm-tank-body { width: 90px; height: 140px; }
+  .wm-card-title, .wm-pump-label { font-size: 21px; font-weight: 900; }
+  .wm-tank-value { font-size: 21px; min-width: 52px; padding: 5px 8px; }
+  .wm-scale { font-size: 21px; height: 140px; top: 16px; }
+  .wm-scale span { height: 10px; font-size: 21px; }
+  .wm-scale-left { left: -28px; width: 26px; }
   .wm-scale-right { right: -28px; width: 24px; }
   .wm-segment { flex-basis: 36px; width: 36px; }
   .wm-purification-card { width: 140px; }
@@ -632,31 +645,30 @@
 @media (min-width: 480px) and (max-width: 767px) {
   .wm-diagram { padding: 4px 6px 0; width: 100%; }
   .wm-flow-layout { gap: 0; justify-content: center; }
-  .wm-tank-card-left, .wm-tank-card-right { width: 160px; }
-  .wm-tank-card-right { width: 146px; }
-  .wm-tank-body { width: 120px; height: 160px; }
-  .wm-card-title, .wm-pump-label { font-size: 18px; }
-  .wm-tank-value { font-size: 20px; min-width: 56px; }
+  .wm-tank-card-left, .wm-tank-card-right { width: 155px; }
+  .wm-tank-body { width: 115px; height: 160px; }
+  .wm-card-title, .wm-pump-label { font-size: 21px; }
+  .wm-tank-value { font-size: 21px; min-width: 52px; }
   .wm-segment { flex-basis: 40px; width: 40px; }
   .wm-purification-card { width: 160px; }
   .wm-purification-tank { width: 130px; height: 130px; }
-  .wm-scale { height: 160px; top: 22px; }
+  .wm-scale { height: 160px; top: 16px; }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
-  .wm-diagram { width: min(100%, 800px); }
+  .wm-diagram { width: min(100%, 820px); }
   .wm-flow-layout { gap: 0; }
-  .wm-card-title, .wm-pump-label { font-size: 22px; }
+  .wm-card-title, .wm-pump-label { font-size: 21px; }
   .wm-purification-card { width: 200px; }
 }
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .wm-diagram { width: min(100%, 850px); }
+  .wm-diagram { width: min(100%, 860px); }
 }
 @media (min-width: 1441px) {
-  .wm-diagram { width: min(100%, 900px); }
+  .wm-diagram { width: min(100%, 920px); }
 }
 
 /* ─────────────────────────────────────────────────────────── */
-/* INTERACTIVE PIPELINE CONTROLS (embedded toggles)            */
+/* INTERACTIVE PIPELINE CONTROLS                               */
 /* ─────────────────────────────────────────────────────────── */
 
 .is-clickable {
@@ -700,7 +712,6 @@
 }
 
 .wm-purification-card.is-on {
-  /* Glow removed per design request — keep selector for state styling without visual effect */
   box-shadow: none;
   background: transparent;
 }
@@ -716,9 +727,9 @@
 
 .wm-purification-label {
   text-align: center;
-  margin-top: 12px;
+  margin-top: 10px;
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 800;
   color: #475569;
   display: flex;
@@ -732,6 +743,7 @@
   border-radius: 12px;
   padding: 4px;
   transition: box-shadow 0.25s ease, background 0.2s ease;
+  overflow: visible;
 }
 
 .wm-tank-card.is-clickable:hover {
@@ -739,23 +751,22 @@
 }
 
 .wm-tank-card.is-on {
-  /* Glow removed per design request — keep selector for state styling without visual effect */
   box-shadow: none;
 }
 
-/* State pills */
+/* State pills — min 21px */
 .wm-state-pill {
   display: inline-flex;
   align-items: center;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 21px;
   font-weight: 800;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
   border-radius: 999px;
-  margin-left: 6px;
+  margin-left: 5px;
   text-transform: uppercase;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
 .wm-state-pill.on {
@@ -778,87 +789,3 @@
   gap: 4px;
   flex-wrap: wrap;
 }
-
-/* ─────────────────────────────────────────────────────────── */
-/* FIT-TO-VIEWPORT OVERRIDES — prevent right-side clipping     */
-/* ─────────────────────────────────────────────────────────── */
-
-/* Make the diagram fill its container without forcing a min width */
-.water-management-diagram {
-  padding: 4px;
-  overflow: hidden;
-}
-
-.wm-diagram {
-  max-width: 100%;
-  width: 100%;
-  padding: 0;
-  margin: 0;
-}
-
-.wm-flow-layout {
-  width: 100%;
-  justify-content: space-between;
-  margin-left: 0;
-  gap: 0;
-}
-
-/* Shrink the side tanks */
-.wm-tank-card-left,
-.wm-tank-card-right {
-  width: 150px;
-  margin-left: 0;
-}
-.wm-tank-card-right .wm-tank-shell { margin-right: 16px; }
-.wm-tank-card-right .wm-card-title { padding-right: 16px; }
-
-.wm-tank-shell { width: 130px; padding-top: 6px; }
-.wm-tank-body {
-  width: 110px;
-  height: 200px;
-  margin-top: 6px;
-}
-.wm-tank-value { font-size: 20px; min-width: 56px; padding: 6px 10px; }
-
-.wm-scale { height: 200px; top: 12px; font-size: 13px; }
-.wm-scale span { font-size: 13px; height: 9px; }
-.wm-scale-left { left: -22px; width: 20px; }
-.wm-scale-right { right: -22px; width: 20px; }
-
-/* Shrink purification tank */
-.wm-purification-card { width: 220px; }
-.wm-purification-tank {
-  width: 200px;
-  height: 200px;
-  border-width: 8px;
-}
-
-/* Shrink pump blocks */
-.wm-pump-block { width: 80px; }
-.wm-pump { width: 64px; height: 64px; }
-.wm-pump-blade { width: 18px; }
-
-/* Shrink pipe segments */
-.wm-segment {
-  flex: 1 1 0;
-  min-width: 24px;
-  max-width: 70px;
-  width: auto;
-  margin-inline: 4px;
-}
-
-/* Tighter labels so things fit vertically too */
-.wm-card-title,
-.wm-pump-label { font-size: 17px; margin: 4px 0 0; }
-.wm-card-title-bottom { min-height: 22px; }
-.wm-pump-label-bottom { min-height: 36px; font-size: 15px; margin-top: 6px; }
-
-.wm-state-pill { font-size: 11px; padding: 2px 7px; margin-left: 4px; }
-.wm-low-pill { font-size: 14px; padding: 2px 8px; }
-
-.wm-purification-label { font-size: 15px; margin-top: 8px; }
-
-/* ─── Tweak: narrower Main Tank card so it doesn't crowd the row ─── */
-.wm-tank-card-right { width: 130px; }
-.wm-tank-card-right .wm-tank-shell { margin-right: 10px; }
-.wm-tank-card-right .wm-card-title { padding-right: 10px; }

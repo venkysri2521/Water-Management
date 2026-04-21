@@ -20,7 +20,7 @@ export default function App() {
             <path d="M18 10C18 10 13 17 13 22C13 24.8 15.2 27 18 27C20.8 27 23 24.8 23 22C23 17 18 10 18 10Z" fill="white" opacity="0.5"/>
           </svg>
           <div className="header-text">
-            <h1>AquaFlow <span>IMS</span></h1>
+            <h1>Water-Management</h1>
           </div>
         </div>
         <button className="reset-all-btn" onClick={resetSystem}>

@@ -110,9 +110,6 @@ export default function HouseGrid({ system, houses: housesProp, onToggle, onRech
 
   return (
     <div className={`house-grid-wrapper ${singleColumn ? 'house-grid-single' : ''}`}>
-      <div className="hg-header">
-        <span className="hg-title">{singleColumn ? 'Residence' : 'Residential Supply'}</span>
-      </div>
       <div className={`house-grid ${singleColumn ? 'house-grid-1col' : ''}`} style={!singleColumn ? { gridTemplateColumns: `repeat(${houses.length}, 1fr)` } : undefined}>
         {houses.map(house => (
           <HouseCard

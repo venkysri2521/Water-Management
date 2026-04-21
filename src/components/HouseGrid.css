@@ -152,7 +152,7 @@
 
 .house-id {
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 21px;
   font-weight: 900;
   color: #475569;
 }
@@ -337,11 +337,11 @@
   }
 
   .hg-title {
-    font-size: 18px;
+    font-size: 21px;
   }
 
   .hg-sub {
-    font-size: 12px;
+    font-size: 21px;
   }
 
   .house-grid {
@@ -360,11 +360,11 @@
   }
 
   .house-name {
-    font-size: 18px;
+    font-size: 21px;
   }
 
   .house-id {
-    font-size: 12px;
+    font-size: 21px;
   }
 
   .wallet-section {
@@ -372,20 +372,20 @@
   }
 
   .wallet-amount {
-    font-size: 18px;
+    font-size: 21px;
   }
 
   .wallet-label {
-    font-size: 12px;
+    font-size: 21px;
   }
 
   .wallet-meta {
-    font-size: 12px;
+    font-size: 21px;
   }
 
   .tap-button {
     padding: 8px;
-    font-size: 14px;
+    font-size: 21px;
     border-radius: 6px;
   }
 
@@ -397,12 +397,12 @@
   .recharge-input {
     flex: 0 0 88px;
     min-width: 88px;
-    font-size: 12px;
+    font-size: 21px;
     padding: 5px 22px 5px 8px;
     background-position: right 6px center;
   }
   .recharge-btn {
-    font-size: 12px;
+    font-size: 21px;
     padding: 5px 7px;
   }
 }
@@ -419,11 +419,11 @@
   }
 
   .hg-title {
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .hg-sub {
-    font-size: 14px;
+    font-size: 21px;
   }
 
   .house-grid {
@@ -437,11 +437,11 @@
   }
 
   .house-name {
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .house-id {
-    font-size: 14px;
+    font-size: 21px;
   }
 
   .wallet-section {
@@ -449,30 +449,30 @@
   }
 
   .wallet-amount {
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .wallet-label {
-    font-size: 14px;
+    font-size: 21px;
   }
 
   .wallet-meta {
-    font-size: 14px;
+    font-size: 21px;
   }
 
   .tap-button {
     padding: 8px;
-    font-size: 16px;
+    font-size: 21px;
     border-radius: 6px;
   }
 
   .recharge-input {
     flex: 0 0 96px;
     min-width: 96px;
-    font-size: 13px;
+    font-size: 21px;
   }
   .recharge-btn {
-    font-size: 12px;
+    font-size: 21px;
   }
 }
 
@@ -487,7 +487,7 @@
   }
 
   .hg-sub {
-    font-size: 15px;
+    font-size: 21px;
   }
 
   .house-grid {
@@ -500,19 +500,19 @@
   }
 
   .house-name {
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .house-id {
-    font-size: 14px;
+    font-size: 21px;
   }
 
   .wallet-amount {
-    font-size: 20px;
+    font-size: 21px;
   }
 
   .tap-button {
-    font-size: 16px;
+    font-size: 21px;
   }
 }
 
@@ -587,7 +587,7 @@
 }
 
 .hg-header { margin-bottom: 8px; min-height: 24px; }
-.hg-title { font-size: 18px; }
+.hg-title { font-size: 21px; }
 
 .house-grid { gap: 10px; }
 
@@ -603,7 +603,7 @@
 
 .led-indicator { width: 11px; height: 11px; top: 2px; right: 2px; }
 
-.house-name { font-size: 18px; }
+.house-name { font-size: 21px; }
 
 .wallet-section {
   padding: 8px 10px;
@@ -611,16 +611,16 @@
   border-radius: 8px;
 }
 .wallet-header { margin-bottom: 4px; min-height: 20px; }
-.wallet-label { font-size: 14px; }
-.wallet-amount { font-size: 18px; }
+.wallet-label { font-size: 21px; }
+.wallet-amount { font-size: 21px; }
 .wallet-bar-bg { height: 8px; margin-bottom: 6px; }
-.wallet-meta { font-size: 13px; min-height: 18px; }
+.wallet-meta { font-size: 21px; min-height: 18px; }
 
 .house-controls { gap: 6px; }
 
 .tap-btn {
   padding: 10px 12px;
-  font-size: 16px;
+  font-size: 21px;
   min-height: 42px;
   border-radius: 10px;
   border-width: 1.5px;
@@ -632,7 +632,7 @@
 .recharge-input {
   flex: 0 0 92px;
   min-width: 92px;
-  font-size: 14px;
+  font-size: 21px;
   padding: 10px 24px 10px 10px;
   min-height: 42px;
   border-width: 1.5px;
@@ -641,7 +641,7 @@
 }
 
 .recharge-btn {
-  font-size: 15px;
+  font-size: 21px;
   padding: 10px 12px;
   min-height: 42px;
   border-width: 1.5px;
@@ -651,8 +651,8 @@
 /* Single-column (House 1) sits in a tighter top-row card */
 .house-grid-single { padding: 12px; }
 .house-grid-single .house-svg { width: 64px; height: 56px; }
-.house-grid-single .house-name { font-size: 17px; }
-.house-grid-single .wallet-amount { font-size: 17px; }
+.house-grid-single .house-name { font-size: 21px; }
+.house-grid-single .wallet-amount { font-size: 21px; }
 
 /* Force the large desktop media queries to honor compact sizing */
 @media (min-width: 1025px) {
@@ -666,27 +666,27 @@
 .house-name { font-size: 22px; }
 
 .wallet-section { padding: 10px 12px; }
-.wallet-label { font-size: 16px; }
+.wallet-label { font-size: 21px; }
 .wallet-amount { font-size: 22px; }
 .wallet-bar-bg { height: 10px; }
-.wallet-meta { font-size: 14px; }
+.wallet-meta { font-size: 21px; }
 
 .tap-btn {
   padding: 14px 16px;
-  font-size: 18px;
+  font-size: 21px;
   min-height: 52px;
 }
 
 .recharge-input {
   flex: 0 0 100px;
   min-width: 100px;
-  font-size: 16px;
+  font-size: 21px;
   padding: 12px 26px 12px 12px;
   min-height: 50px;
 }
 
 .recharge-btn {
-  font-size: 17px;
+  font-size: 21px;
   padding: 12px 14px;
   min-height: 50px;
 }
@@ -707,7 +707,7 @@
 .recharge-input {
   min-height: 62px;
   padding: 16px 28px 16px 14px;
-  font-size: 18px;
+  font-size: 21px;
   flex: 0 0 108px;
   min-width: 108px;
 }
@@ -715,7 +715,7 @@
 .recharge-btn {
   min-height: 62px;
   padding: 16px 16px;
-  font-size: 20px;
+  font-size: 21px;
 }
 
 /* Slightly tighter card internals so taller buttons still fit without overflow */
