@@ -9,11 +9,19 @@ function PipeSegment({ flowing = false, attack = false }) {
   )
 }
 
-function SideTank({ title, level, maxLevel, side, low = false, showScale = true, valueLabel = null }) {
+function SideTank({ title, level, maxLevel, side, low = false, showScale = true, valueLabel = null, onClick = null, active = false, badge = null }) {
   const pct = Math.max(0, Math.min(100, (level / maxLevel) * 100))
+  const clickable = !!onClick
 
   return (
-    <div className={`wm-tank-card wm-tank-card-${side}`}>
+    <div
+      className={`wm-tank-card wm-tank-card-${side} ${clickable ? 'is-clickable' : ''} ${active ? 'is-on' : ''}`}
+      onClick={onClick || undefined}
+      role={clickable ? 'button' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onKeyDown={clickable ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } } : undefined}
+      title={clickable ? 'Click to toggle pump' : undefined}
+    >
       <div className="wm-tank-shell">
         <div className="wm-tank-lid" />
         <div className="wm-tank-body">
@@ -31,14 +39,22 @@ function SideTank({ title, level, maxLevel, side, low = false, showScale = true,
       <div className="wm-card-title wm-card-title-bottom">
         {title}
         {low && <span className="wm-low-pill">LOW</span>}
+        {badge && <span className={`wm-state-pill ${active ? 'on' : 'off'}`}>{badge}</span>}
       </div>
     </div>
   )
 }
 
-function Pump({ label, active, attack = false }) {
+function Pump({ label, active, attack = false, onClick }) {
   return (
-    <div className="wm-pump-block">
+    <div
+      className={`wm-pump-block is-clickable`}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick && onClick() } }}
+      title={`Click to turn ${label} ${active ? 'OFF' : 'ON'}`}
+    >
       <div className={`wm-pump ${active ? 'is-active' : ''} ${attack ? 'is-attack' : ''}`}>
         <div className="wm-pump-ring" />
         <div className="wm-pump-housing">
@@ -53,14 +69,24 @@ function Pump({ label, active, attack = false }) {
         <div className="wm-pump-port wm-pump-port-left" />
         <div className="wm-pump-port wm-pump-port-right" />
       </div>
-      <div className="wm-pump-label wm-pump-label-bottom">{label}</div>
+      <div className="wm-pump-label wm-pump-label-bottom">
+        {label}
+        <span className={`wm-state-pill ${active ? 'on' : 'off'}`}>{active ? 'ON' : 'OFF'}</span>
+      </div>
     </div>
   )
 }
 
-function PurificationTank({ active }) {
+function PurificationTank({ active, onClick }) {
   return (
-    <div className="wm-purification-card">
+    <div
+      className={`wm-purification-card is-clickable ${active ? 'is-on' : 'is-off'}`}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick && onClick() } }}
+      title={`Click to turn purification ${active ? 'OFF' : 'ON'}`}
+    >
       <div className="wm-purification-tank">
         <div className={`wm-purification-water ${active ? 'is-active' : ''}`} aria-hidden="true">
           <span className="wm-purification-blob wm-purification-blob-a" />
@@ -75,6 +101,10 @@ function PurificationTank({ active }) {
           <span className="wm-stirrer-stick" />
         </div>
       </div>
+      <div className="wm-purification-label">
+        Purification
+        <span className={`wm-state-pill ${active ? 'on' : 'off'}`}>{active ? 'ON' : 'OFF'}</span>
+      </div>
     </div>
   )
 }
@@ -83,9 +113,9 @@ export default function WaterSystem({ system }) {
   const {
     purificationLevel,
     mainTankLevel,
-    purificationActive,
-    pumpR2P,
-    pumpP2M,
+    purificationActive, setPurificationActive,
+    pumpR2P, setPumpR2P,
+    pumpP2M, setPumpP2M,
     modbusAttack,
     PURIFICATION_CAPACITY,
     MAIN_TANK_CAPACITY,
@@ -106,19 +136,30 @@ export default function WaterSystem({ system }) {
             showScale={false}
           />
           <PipeSegment flowing={pumpR2P} />
-          <Pump label="Pump 1" active={pumpR2P} />
+          <Pump label="Pump 1" active={pumpR2P} onClick={() => setPumpR2P(v => !v)} />
           <PipeSegment flowing={pumpR2P} />
-          <PurificationTank active={purificationRunning} />
+          <PurificationTank
+            active={purificationRunning}
+            onClick={() => setPurificationActive(v => !v)}
+          />
           <PipeSegment flowing={pumpP2M} attack={modbusAttack} />
-          <Pump label="Pump 2" active={pumpP2M} attack={modbusAttack} />
+          <Pump
+            label="Pump 2"
+            active={pumpP2M}
+            attack={modbusAttack}
+            onClick={() => setPumpP2M(v => !v)}
+          />
           <PipeSegment flowing={pumpP2M} attack={modbusAttack} />
           <SideTank
-            title="Tank 2"
+            title="Main Tank"
             level={mainTankLevel}
             maxLevel={MAIN_TANK_CAPACITY}
             side="right"
             low={mainLow}
             valueLabel={`${Math.round((mainTankLevel / MAIN_TANK_CAPACITY) * 100)}%`}
+            onClick={() => setPumpP2M(v => !v)}
+            active={pumpP2M}
+            badge={pumpP2M ? 'ON' : 'OFF'}
           />
         </div>
       </div>

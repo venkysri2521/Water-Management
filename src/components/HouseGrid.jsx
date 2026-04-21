@@ -14,7 +14,7 @@ function HouseCard({ house, onToggle, onRecharge, apiAttack, mainTankLevel }) {
   return (
     <div className={`house-card ${apiAttack ? 'house-attack' : ''}`} style={{ '--house-color': color }}>
       <div className="house-icon-area">
-        <svg width="56" height="50" viewBox="0 0 56 50" fill="none" className={`house-svg ${house.consuming && canConsume ? 'house-active' : ''}`}>
+        <svg width="120" height="106" viewBox="0 0 56 50" fill="none" className={`house-svg ${house.consuming && canConsume ? 'house-active' : ''}`}>
           <polygon points="28,2 52,20 4,20" fill={color} opacity="0.9" />
           <polygon points="28,2 52,20 4,20" fill="none" stroke={color} strokeWidth="1.5" />
           <rect x="8" y="20" width="40" height="28" fill="#f8fafc" stroke="#e2e8f0" strokeWidth="1.5" />
@@ -34,8 +34,8 @@ function HouseCard({ house, onToggle, onRecharge, apiAttack, mainTankLevel }) {
 
       <div className="house-info">
         <div className="house-name">{house.name}</div>
-        <div className="house-id">Unit {String(house.id).padStart(2, '0')}</div>
       </div>
+      
 
       <div className="wallet-section">
         <div className="wallet-header">
@@ -66,7 +66,6 @@ function HouseCard({ house, onToggle, onRecharge, apiAttack, mainTankLevel }) {
           <TapIcon active={house.consuming && canConsume} />
           {house.consuming && canConsume ? 'Close Tap' : 'Open Tap'}
         </button>
-        {/* Scenario 3: Wallet recharge (max 100) */}
         <div className="recharge-row">
           <select
             className="recharge-input"
@@ -94,7 +93,7 @@ function HouseCard({ house, onToggle, onRecharge, apiAttack, mainTankLevel }) {
 
 function TapIcon({ active }) {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+    <svg width="20" height="20" viewBox="0 0 14 14" fill="none">
       <path d="M2 4h8a2 2 0 012 2v1H2V4z" fill="currentColor" opacity="0.8" />
       <path d="M5 7v5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       {active && <path d="M5 12l-1 2M5 12l1 2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />}
@@ -102,19 +101,19 @@ function TapIcon({ active }) {
   )
 }
 
-export default function HouseGrid({ system }) {
-  const { houses, toggleConsumption, rechargeWallet, apiAttack, mainTankLevel } = system
+export default function HouseGrid({ system, houses: housesProp, onToggle, onRecharge, apiAttack: apiAttackProp, mainTankLevel: mainTankLevelProp, singleColumn = false }) {
+  const houses = housesProp ?? system.houses
+  const toggleConsumption = onToggle ?? system.toggleConsumption
+  const rechargeWallet = onRecharge ?? system.rechargeWallet
+  const apiAttack = apiAttackProp ?? system.apiAttack
+  const mainTankLevel = mainTankLevelProp ?? system.mainTankLevel
 
   return (
-    <div className="house-grid-wrapper">
+    <div className={`house-grid-wrapper ${singleColumn ? 'house-grid-single' : ''}`}>
       <div className="hg-header">
-        <span className="hg-title">Residential Supply</span>
-        <span className="hg-sub">4 Units Active</span>
-        {apiAttack && (
-          <span className="hg-attack-badge">⚠ DB Attack Active</span>
-        )}
+        <span className="hg-title">{singleColumn ? 'Residence' : 'Residential Supply'}</span>
       </div>
-      <div className="house-grid">
+      <div className={`house-grid ${singleColumn ? 'house-grid-1col' : ''}`} style={!singleColumn ? { gridTemplateColumns: `repeat(${houses.length}, 1fr)` } : undefined}>
         {houses.map(house => (
           <HouseCard
             key={house.id}

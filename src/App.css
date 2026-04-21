@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -7,56 +7,55 @@
 }
 
 html, body, #root {
-  min-height: 100%;
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
 body {
-  background: #ffffff;
+  background: #f8fafc;
   color: #0f172a;
   font-family: 'Inter', sans-serif;
-  font-size: 24px;
-  line-height: 1.5;
-  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.4;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
 }
 
 .app {
-  width: 100%;
-  max-width: 100%;
+  width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background: linear-gradient(180deg, #f8fafc 0%, #eff6ff 100%);
 }
 
-/* ── Header ── */
+/* ── Header / Navbar ── */
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
-  border-bottom: 4px solid #94a3b8;
-  background: white;
-  flex-shrink: 0;
+  padding: 14px 28px;
+  border-bottom: 2px solid #e2e8f0;
+  background: #ffffff;
+  flex: 0 0 auto;
   z-index: 100;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
 }
 
 .header-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
 }
 
 .header-text h1 {
   font-family: 'Inter', sans-serif;
-  font-size: 26px;
-  font-weight: 900;
+  font-size: 30px;
+  font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -66,342 +65,140 @@ body {
   color: #0ea5e9;
 }
 
-.header-sub {
-  font-family: 'Inter', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: #191a1b;
-  letter-spacing: 0.04em;
-}
-
-/* ── Section Dividers ── */
-.section-divider {
-  padding: 6px 16px;
-  display: flex;
+.reset-all-btn {
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 0;
-}
-
-.section-divider span {
-  font-family: 'Inter', sans-serif;
-  font-size: 18px;
-  font-weight: 900;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.section-divider::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: #f1f5f9;
-}
-
-/* ── Pipeline Section ── */
-.pipeline-section {
-  background: white;
-  border: 3px solid #94a3b8;
+  background: #ffffff;
+  color: #0f172a;
+  border: 2px solid #fecaca;
   border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  flex: 1 1 0;
-  min-height: 340px;
-  overflow: hidden;
+  padding: 18px 30px;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  min-height: 60px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
-/* ── Top Section: Pipeline + Primary Controls (Row 1) ── */
-.top-section {
-  display: flex;
-  gap: 16px;
-  margin: 0 12px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex: 0 0 auto;
-  min-height: 0;
-}
-
-.top-section > .pipeline-section {
-  flex: 1.08 1 0;
-  margin: 0;
-  min-width: 0;
-}
-
-.top-section > .control-panel.cp-primary {
-  flex: 0 0 620px;
-  min-width: 620px;
-  max-height: none;
-  margin-left: 0;
-}
-
-/* ── Bottom Section ── */
-.bottom-section {
-  display: flex;
-  gap: 16px;
-  margin: 0 12px 8px;
-  align-items: flex-start;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  flex-shrink: 1;
-}
-
-.bottom-section > .control-panel {
-  flex: 0 0 480px;
-  overflow-y: auto;
-}
-
-.bottom-section > .house-grid-wrapper {
-  flex: 1 1 0;
-  overflow: visible;
-}
-
-.bottom-section > * {
-  min-width: 0;
+.reset-all-btn:hover {
+  background: #0ea5e9;
+  color: #fff;
+  border-color: #0ea5e9;
 }
 
 /* ── Main ── */
 .app-main {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1;
+  gap: 12px;
+  flex: 1 1 auto;
   min-height: 0;
+  padding: 12px;
   overflow: hidden;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+/* ── Top Section: Pipeline + House 1 ── */
+.top-section {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex: 1 1 50%;
+  min-height: 0;
+}
+
+.pipeline-section {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.04);
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+}
+
+/* House 1 wrapper — match the width of one house in the bottom row.
+   Bottom row contains 3 houses + 2 gaps inside .app-main's padding (12px each side)
+   and a 12px gap between top-section items. So one house = (100vw - 24px padding - 24px gaps) / 3.
+   The pipeline-section consumes the rest minus one 12px gap. */
+.house1-wrapper {
+  flex: 0 0 calc((100vw - 24px - 24px) / 3);
+  min-width: 280px;
+  display: flex;
+  min-height: 0;
+}
+
+.house1-wrapper .house-grid-wrapper {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.04);
+}
+
+/* ── Bottom Section: Houses 2, 3, 4 ── */
+.bottom-section {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  flex: 1 1 50%;
+  min-height: 0;
+}
+
+.bottom-section > .house-grid-wrapper {
+  flex: 1 1 0;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.04);
+  min-height: 0;
+}
+
+/* Hide scrollbars across the app — single-frame layout */
+::-webkit-scrollbar { width: 0; height: 0; display: none; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
 
 /* ─────────────────────────────────────────────────────────── */
-/* RESPONSIVE DESIGN - MOBILE FIRST APPROACH                  */
+/* OVERFLOW FIX — keep everything within the viewport          */
 /* ─────────────────────────────────────────────────────────── */
 
-/* Extra Small Devices (< 480px) */
-@media (max-width: 479px) {
-  body {
-    font-size: 18px;
-  }
-
-  .app-header {
-    padding: 10px 12px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .header-text h1 {
-    font-size: 22px;
-  }
-
-  .header-sub {
-    font-size: 18px;
-  }
-
-  .app-main {
-    gap: 6px;
-    padding: 0;
-  }
-
-  .section-divider {
-    padding: 8px 12px;
-  }
-
-  .section-divider span {
-    font-size: 18px;
-  }
-
-  .pipeline-section {
-    margin: 0 8px;
-    border-radius: 12px;
-  }
-
-  .bottom-section {
-    flex-direction: column;
-    margin: 0 8px 8px;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  .bottom-section > .control-panel {
-    flex: 1;
-    min-width: unset;
-  }
-
-  .bottom-section > .house-grid-wrapper {
-    flex: 1;
-  }
-
-  .bottom-section > * {
-    min-width: unset;
-  }
+/* Remove the duplicate white card around House 1; HouseGrid already
+   renders its own .house-grid-wrapper card. */
+.house1-wrapper {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
 }
 
-/* Small Devices (480px - 767px) */
-@media (min-width: 480px) and (max-width: 767px) {
-  body {
-    font-size: 18px;
-  }
-
-  .app-header {
-    padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .header-text h1 {
-    font-size: 24px;
-  }
-
-  .header-sub {
-    font-size: 18px;
-  }
-
-  .app-main {
-    gap: 6px;
-  }
-
-  .section-divider {
-    padding: 8px 16px;
-  }
-
-  .section-divider span {
-    font-size: 18px;
-  }
-
-  .pipeline-section {
-    margin: 0 12px;
-    border-radius: 14px;
-    overflow-x: auto;
-  }
-
-  .bottom-section {
-    flex-direction: column;
-    margin: 0 12px 12px;
-    gap: 12px;
-    align-items: stretch;
-  }
-
-  .bottom-section > .control-panel {
-    flex: 1;
-    min-width: unset;
-  }
-
-  .bottom-section > .house-grid-wrapper {
-    flex: 1;
-  }
-
-  .bottom-section > * {
-    min-width: unset;
-  }
+.house1-wrapper .house-grid-wrapper {
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 16px rgba(15, 23, 42, 0.04);
 }
 
-/* Tablets (768px - 1024px) */
-@media (min-width: 768px) and (max-width: 1024px) {
-  body {
-    font-size: 20px;
-  }
-
-  .app-header {
-    padding: 12px 18px;
-  }
-
-  .header-text h1 {
-    font-size: 26px;
-  }
-
-  .header-sub {
-    font-size: 18px;
-  }
-
-  .pipeline-section {
-    margin: 0 14px;
-  }
-
-  .bottom-section {
-    margin: 0 14px 14px;
-    gap: 14px;
-  }
-
-  .bottom-section > .control-panel {
-    flex: 0 0 520px;
-  }
-
-  .bottom-section > * {
-    min-width: 280px;
-  }
-
-  .water-system {
-    overflow-x: auto;
-  }
+/* Make House 1 the same width as one bottom-row house (3-col grid). */
+.house1-wrapper {
+  flex: 0 0 calc((100vw - 48px) / 3);
+  min-width: 300px;
 }
 
-/* Large Screens (1025px - 1440px) */
-@media (min-width: 1025px) and (max-width: 1440px) {
-  body {
-    font-size: 22px;
-  }
-
-  .app-header {
-    padding: 14px 22px;
-  }
-
-  .header-text h1 {
-    font-size: 28px;
-  }
-
-  .bottom-section > .control-panel {
-    flex: 0 0 560px;
-  }
+.pipeline-section {
+  padding: 12px;
+  overflow: hidden;
+  flex: 1 1 0;
+  min-width: 0;
 }
 
-/* Extra Large Screens (> 1440px) */
-@media (min-width: 1441px) {
-  body {
-    font-size: 24px;
-  }
+.top-section { flex: 1 1 48%; }
+.bottom-section { flex: 1 1 52%; }
 
-  .app-header {
-    padding: 16px 28px;
-  }
-
-  .header-text h1 {
-    font-size: 32px;
-  }
-
-  .bottom-section > .control-panel {
-    flex: 0 0 600px;
-  }
-}
-
-
-
-/* ─────────────────────────────────────────────────────────── */
-/* TOP SECTION RESPONSIVE (Pipeline + Primary Controls)       */
-/* ─────────────────────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .top-section {
-    flex-direction: column;
-    margin: 0 12px;
-    gap: 12px;
-  }
-  .top-section > .control-panel.cp-primary {
-    flex: 1 1 auto;
-  }
-}
-
-@media (min-width: 1025px) and (max-width: 1440px) {
-  .top-section > .control-panel.cp-primary {
-    flex: 0 0 620px;
-  }
-}
-
-@media (min-width: 1441px) {
-  .top-section > .control-panel.cp-primary {
-    flex: 0 0 660px;
-  }
-}
+/* Give the top row a bit more vertical room so the taller House-1 buttons
+   are never clipped, and trim the bottom row accordingly. */
+.top-section { flex: 1 1 52%; }
+.bottom-section { flex: 1 1 48%; }
