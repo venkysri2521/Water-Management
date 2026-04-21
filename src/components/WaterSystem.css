@@ -94,36 +94,7 @@
   overflow: visible;  /* let the scale render outside if needed */
 }
 
-.wm-tank-card-right .wm-tank-shell {
-  margin-right: 0;
-  margin-left: 8px;   /* shift shell left so scale has room on the right */
-  width: 110px;
-  overflow: visible;
-}
-
-.wm-tank-card-right .wm-tank-body {
-  width: 96px;
-  height: 210px;
-}
-
-.wm-tank-card-right .wm-card-title {
-  padding-right: 0;
-  padding-left: 0;
-  font-size: 21px;
-  justify-content: flex-start;
-  margin-left: 8px;
-}
-
-.wm-tank-card-right .wm-scale {
-  height: 210px;
-  top: 18px;
-}
-
-/* Place scale tightly to the right of the tank body */
-.wm-tank-card-right .wm-scale-right {
-  right: -48px;
-  width: 44px;
-}
+/* Main tank width overrides removed so it matches Reservoir width */
 
 /* ── Shared tank shell ── */
 .wm-tank-shell {
@@ -280,8 +251,8 @@
 .wm-segment {
   position: relative;
   flex: 1 1 0;
-  min-width: 20px;
-  max-width: 60px;
+  min-width: 30px;
+  max-width: 120px;
   height: 12px;
   overflow: hidden;
   border-radius: 999px;
@@ -620,7 +591,7 @@
   .wm-flow-layout { gap: 0; }
   .wm-purification-card { width: 180px; }
   .wm-purification-tank { width: 140px; height: 140px; }
-  .wm-segment { flex-basis: 40px; width: 40px; }
+  .wm-segment { flex-basis: 60px; width: 60px; }
 }
 @media (max-width: 680px) {
   .water-management-diagram { overflow-x: auto; padding-bottom: 14px; }
@@ -649,22 +620,22 @@
   .wm-tank-body { width: 115px; height: 160px; }
   .wm-card-title, .wm-pump-label { font-size: 21px; }
   .wm-tank-value { font-size: 21px; min-width: 52px; }
-  .wm-segment { flex-basis: 40px; width: 40px; }
+  .wm-segment { flex-basis: 60px; width: 60px; }
   .wm-purification-card { width: 160px; }
   .wm-purification-tank { width: 130px; height: 130px; }
   .wm-scale { height: 160px; top: 16px; }
 }
 @media (min-width: 768px) and (max-width: 1024px) {
-  .wm-diagram { width: min(100%, 820px); }
+  .wm-diagram { width: min(100%, 940px); }
   .wm-flow-layout { gap: 0; }
   .wm-card-title, .wm-pump-label { font-size: 21px; }
   .wm-purification-card { width: 200px; }
 }
 @media (min-width: 1025px) and (max-width: 1440px) {
-  .wm-diagram { width: min(100%, 860px); }
+  .wm-diagram { width: min(100%, 1060px); }
 }
 @media (min-width: 1441px) {
-  .wm-diagram { width: min(100%, 920px); }
+  .wm-diagram { width: min(100%, 1200px); }
 }
 
 /* ─────────────────────────────────────────────────────────── */

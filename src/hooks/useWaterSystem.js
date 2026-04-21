@@ -6,8 +6,8 @@ const HOUSE_WALLET_MAX = 100
 const WATER_COST_PER_LITER = 5
 const FILL_RATE = 2 // ml per tick
 const CONSUMPTION_RATE = 1.5
-const MAIN_TANK_REFILL_START_PCT = 0.8
-const MAIN_TANK_REFILL_STOP_PCT = 0.95
+const MAIN_TANK_REFILL_START_PCT = 0.2
+const MAIN_TANK_REFILL_STOP_PCT = 0.85
 
 export function useWaterSystem() {
   const [reservoirLevel, setReservoirLevel] = useState(850)
@@ -117,7 +117,7 @@ export function useWaterSystem() {
 
         if (shouldFillMain) {
           setPumpP2M(true)
-          const flow = 3 + Math.random() * 1
+          const flow = MAIN_TANK_CAPACITY / 240 // Takes 2 minutes (120s = 240 ticks)
           setFlowRateP2M(flow)
           level = Math.max(0, level - flow)
           setMainTankLevel(mt => {
@@ -136,11 +136,24 @@ export function useWaterSystem() {
       setHouses(prev => prev.map(h => {
         if (!h.consuming || h.wallet <= 0 || mainTankLevel <= 0) return { ...h, consuming: h.wallet > 0 ? h.consuming : false }
         if (apiAttack) return h
-        const usage = CONSUMPTION_RATE * (0.8 + Math.random() * 0.4)
-        const cost = usage * WATER_COST_PER_LITER / 1000
+        
+        // 1 unit of main tank = 1 Liter = Rs. 5
+        // Consume 0.5 Liters per tick (so the tank doesn't drain too fast, 4 houses * 0.5 = 2.0 L/tick)
+        const requestedUsage = 0.5
+        const maxAffordable = h.wallet / WATER_COST_PER_LITER
+        const actualUsage = Math.min(requestedUsage, maxAffordable, mainTankLevel)
+        
+        const cost = actualUsage * WATER_COST_PER_LITER
         const newWallet = Math.max(0, h.wallet - cost)
-        setMainTankLevel(mt => Math.max(0, mt - usage / 4))
-        return { ...h, wallet: newWallet, consumed: h.consumed + usage / 4, consuming: newWallet > 0 }
+        
+        setMainTankLevel(mt => Math.max(0, mt - actualUsage))
+        
+        return { 
+          ...h, 
+          wallet: newWallet, 
+          consumed: h.consumed + actualUsage, 
+          consuming: newWallet > 0 
+        }
       }))
 
       // Pilferage drains main tank
