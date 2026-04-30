@@ -15,17 +15,19 @@ export default function App() {
       <header className="app-header">
         <div className="header-logo">
           <svg width="52" height="52" viewBox="0 0 36 36" fill="none">
-            <circle cx="18" cy="18" r="17" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5"/>
-            <path d="M18 4C18 4 8 15 8 22C8 27.5 12.5 32 18 32C23.5 32 28 27.5 28 22C28 15 18 4 18 4Z" fill="#0ea5e9"/>
-            <path d="M18 10C18 10 13 17 13 22C13 24.8 15.2 27 18 27C20.8 27 23 24.8 23 22C23 17 18 10 18 10Z" fill="white" opacity="0.5"/>
+            <circle cx="18" cy="18" r="17" fill="#eff6ff" stroke="#bfdbfe" strokeWidth="1.5" />
+            <path d="M18 4C18 4 8 15 8 22C8 27.5 12.5 32 18 32C23.5 32 28 27.5 28 22C28 15 18 4 18 4Z" fill="#0ea5e9" />
+            <path d="M18 10C18 10 13 17 13 22C13 24.8 15.2 27 18 27C20.8 27 23 24.8 23 22C23 17 18 10 18 10Z" fill="white" opacity="0.5" />
           </svg>
           <div className="header-text">
             <h1>Water-Management</h1>
           </div>
         </div>
-        <button className="reset-all-btn" onClick={resetSystem}>
-          ↺ Reset All
-        </button>
+        <div className="header-actions">
+          <button className="reset-all-btn" onClick={resetSystem}>
+            ↺ Reset All
+          </button>
+        </div>
       </header>
 
       <main className="app-main">

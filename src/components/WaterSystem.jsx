@@ -159,7 +159,6 @@ export default function WaterSystem({ system }) {
             valueLabel={`${Math.round((mainTankLevel / MAIN_TANK_CAPACITY) * 100)}%`}
             onClick={() => setPumpP2M(v => !v)}
             active={pumpP2M}
-            badge={pumpP2M ? 'ON' : 'OFF'}
           />
         </div>
       </div>

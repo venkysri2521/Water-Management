@@ -9,6 +9,11 @@ const CONSUMPTION_RATE = 1.5
 const MAIN_TANK_REFILL_START_PCT = 0.2
 const MAIN_TANK_REFILL_STOP_PCT = 0.85
 
+// Mock API function to log actions
+const sendAPI = (actionName, payload) => {
+  console.log(`%c[API SENT] %c${actionName}`, 'color: #0ea5e9; font-weight: bold;', 'color: inherit;', payload)
+}
+
 export function useWaterSystem() {
   const [reservoirLevel, setReservoirLevel] = useState(850)
   const [purificationLevel, setPurificationLevel] = useState(320)
@@ -42,9 +47,30 @@ export function useWaterSystem() {
   }, [])
 
   const triggerPilferage = useCallback(() => {
+    if (pilferageActive || pilferageAlert) return
     setPilferageActive(true)
-    setPilferageAlert(true)
-  }, [])
+    
+    // Play a buzzer sound
+    if (!pilferageSound.current) {
+      pilferageSound.current = new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg')
+    }
+    
+    // After 4 seconds, detect the pilferage and stop it
+    setTimeout(() => {
+      setPilferageActive(false)
+      setPilferageAlert(true)
+      
+      sendAPI("Pilferage", {
+        action: "Pilferage to be detected and water to be stopped",
+        status: "Pilferage Detected",
+        action_taken: "Water Stopped"
+      })
+      
+      if (pilferageSound.current) {
+        pilferageSound.current.play().catch(e => console.error('Audio play failed', e))
+      }
+    }, 4000)
+  }, [pilferageActive, pilferageAlert])
 
   const triggerModbusAttack = useCallback(() => {
     setModbusAttack(true)
@@ -91,6 +117,13 @@ export function useWaterSystem() {
         if (pumpR2P && level > 0 && purificationLevel < PURIFICATION_CAPACITY) {
           const flow = 2 + Math.random() * 1
           setFlowRateR2P(flow)
+          
+          sendAPI("Water Purification", {
+            action: "Water from Reservoir to Purification",
+            "Quantity of water": level,
+            "Flow of water": flow
+          })
+          
           level = Math.max(0, level - flow)
           setPurificationLevel(pl => {
             const newPl = Math.min(PURIFICATION_CAPACITY, pl + flow * 0.95)
@@ -119,6 +152,14 @@ export function useWaterSystem() {
           setPumpP2M(true)
           const flow = MAIN_TANK_CAPACITY / 240 // Takes 2 minutes (120s = 240 ticks)
           setFlowRateP2M(flow)
+          
+          sendAPI("Filling Main tank", {
+            action: "Purification tank to Main Tank",
+            "How much water is there in water tank": mainTankLevel,
+            "Water flow rate": flow,
+            "Time taken to fill the tank": fillTimeMain
+          })
+          
           level = Math.max(0, level - flow)
           setMainTankLevel(mt => {
             const newMt = Math.min(MAIN_TANK_CAPACITY, mt + flow)
@@ -143,6 +184,13 @@ export function useWaterSystem() {
         const maxAffordable = h.wallet / WATER_COST_PER_LITER
         const actualUsage = Math.min(requestedUsage, maxAffordable, mainTankLevel)
         
+        sendAPI("House Water supply", {
+          action: "Main Tank to House",
+          "Quantity of water": h.consumed + actualUsage,
+          "Flow of water": actualUsage,
+          "Wallet amount": h.wallet
+        })
+        
         const cost = actualUsage * WATER_COST_PER_LITER
         const newWallet = Math.max(0, h.wallet - cost)
         
@@ -156,9 +204,13 @@ export function useWaterSystem() {
         }
       }))
 
-      // Pilferage drains main tank
+      // Pilferage drains main tank to reservoir
       if (pilferageActive) {
-        setMainTankLevel(mt => Math.max(0, mt - 3))
+        setMainTankLevel(mt => {
+          const amount = Math.min(mt, 10) // Drain 20 units/sec
+          setReservoirLevel(r => Math.min(1000, r + amount))
+          return mt - amount
+        })
       }
     }, 500)
 
