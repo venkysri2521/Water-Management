@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { syncHouseData, syncPurificationData } from '../lib/waterApi'
 
 const PURIFICATION_CAPACITY = 1000
 const MAIN_TANK_CAPACITY = 500
@@ -9,9 +10,12 @@ const CONSUMPTION_RATE = 1.5
 const MAIN_TANK_REFILL_START_PCT = 0.2
 const MAIN_TANK_REFILL_STOP_PCT = 0.85
 
-// Mock API function to log actions
-const sendAPI = (actionName, payload) => {
-  console.log(`%c[API SENT] %c${actionName}`, 'color: #0ea5e9; font-weight: bold;', 'color: inherit;', payload)
+let apiWarningShown = false
+
+const logApiErrorOnce = (label, error) => {
+  if (apiWarningShown) return
+  apiWarningShown = true
+  console.warn(`[API ERROR] ${label}. Start the Python backend if it is not running.`, error)
 }
 
 export function useWaterSystem() {
@@ -39,6 +43,12 @@ export function useWaterSystem() {
   ])
 
   const tickRef = useRef(null)
+  const latestHousesRef = useRef(houses)
+  const latestPurificationRef = useRef({
+    amountOfWaterPurified: totalPurified,
+    purificationStatus: purificationActive ? 'ON' : 'OFF',
+  })
+  const syncInFlightRef = useRef(false)
   const pilferageSound = useRef(null)
 
   const dismissPilferage = useCallback(() => {
@@ -59,12 +69,6 @@ export function useWaterSystem() {
     setTimeout(() => {
       setPilferageActive(false)
       setPilferageAlert(true)
-      
-      sendAPI("Pilferage", {
-        action: "Pilferage to be detected and water to be stopped",
-        status: "Pilferage Detected",
-        action_taken: "Water Stopped"
-      })
       
       if (pilferageSound.current) {
         pilferageSound.current.play().catch(e => console.error('Audio play failed', e))
@@ -117,13 +121,6 @@ export function useWaterSystem() {
         if (pumpR2P && level > 0 && purificationLevel < PURIFICATION_CAPACITY) {
           const flow = 2 + Math.random() * 1
           setFlowRateR2P(flow)
-          
-          sendAPI("Water Purification", {
-            action: "Water from Reservoir to Purification",
-            "Quantity of water": level,
-            "Flow of water": flow
-          })
-          
           level = Math.max(0, level - flow)
           setPurificationLevel(pl => {
             const newPl = Math.min(PURIFICATION_CAPACITY, pl + flow * 0.95)
@@ -152,14 +149,6 @@ export function useWaterSystem() {
           setPumpP2M(true)
           const flow = MAIN_TANK_CAPACITY / 240 // Takes 2 minutes (120s = 240 ticks)
           setFlowRateP2M(flow)
-          
-          sendAPI("Filling Main tank", {
-            action: "Purification tank to Main Tank",
-            "How much water is there in water tank": mainTankLevel,
-            "Water flow rate": flow,
-            "Time taken to fill the tank": fillTimeMain
-          })
-          
           level = Math.max(0, level - flow)
           setMainTankLevel(mt => {
             const newMt = Math.min(MAIN_TANK_CAPACITY, mt + flow)
@@ -183,14 +172,6 @@ export function useWaterSystem() {
         const requestedUsage = 0.5
         const maxAffordable = h.wallet / WATER_COST_PER_LITER
         const actualUsage = Math.min(requestedUsage, maxAffordable, mainTankLevel)
-        
-        sendAPI("House Water supply", {
-          action: "Main Tank to House",
-          "Quantity of water": h.consumed + actualUsage,
-          "Flow of water": actualUsage,
-          "Wallet amount": h.wallet
-        })
-        
         const cost = actualUsage * WATER_COST_PER_LITER
         const newWallet = Math.max(0, h.wallet - cost)
         
@@ -216,6 +197,40 @@ export function useWaterSystem() {
 
     return () => clearInterval(tickRef.current)
   }, [pumpR2P, pumpP2M, purificationActive, modbusAttack, apiAttack, pilferageActive, autoMode, mainTankLevel, purificationLevel])
+
+  useEffect(() => {
+    latestHousesRef.current = houses
+  }, [houses])
+
+  useEffect(() => {
+    latestPurificationRef.current = {
+      amountOfWaterPurified: totalPurified,
+      purificationStatus: purificationActive ? 'ON' : 'OFF',
+    }
+  }, [totalPurified, purificationActive])
+
+  useEffect(() => {
+    const syncToBackend = () => {
+      if (syncInFlightRef.current) return
+
+      syncInFlightRef.current = true
+      Promise.all([
+        syncHouseData(latestHousesRef.current),
+        syncPurificationData(latestPurificationRef.current),
+      ])
+        .catch(error => {
+          logApiErrorOnce('backend data sync', error)
+        })
+        .finally(() => {
+          syncInFlightRef.current = false
+        })
+    }
+
+    syncToBackend()
+    const interval = setInterval(syncToBackend, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   return {
     reservoirLevel, setReservoirLevel,
